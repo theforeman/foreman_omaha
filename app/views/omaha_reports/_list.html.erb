@@ -1,0 +1,34 @@
+<table class="<%= table_css_classes('table-fixed') %>">
+  <thead>
+    <tr>
+      <% unless params[:host_id] %>
+      <th><%= sort :host, :as => _("Host") %></th>
+      <% end %>
+      <th class="col-md-2"><%= sort :reported, :as => _("Last report") %></th>
+      <th class="col-md-2"><%= sort :version, :as => _("Version") %></th>
+      <th class="col-md-2"><%= _("Status") %></th>
+      <th class="col-md-2"><%= _('Actions') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for report in @omaha_reports %>
+      <tr>
+        <% if params[:host_id].nil? %>
+          <% if report.host.nil? %>
+              <td></td>
+          <% else %>
+              <td class="ellipsis"><%= link_to report.host, host_omaha_reports_path(report.host) %></td>
+          <% end %>
+        <% end %>
+        <td><%= display_link_if_authorized(_("%s ago") % time_ago_in_words(report.reported_at), hash_for_omaha_report_path(:id => report.id)) %></td>
+        <td><%= report.operatingsystem.present? ? operatingsystem_link(report.operatingsystem) : _('unknown') %></td>
+        <td><span class="<%= iconclass_for_omaha_status(report.status) %>"></span> <%= report.to_label %></td>
+        <td>
+          <%= action_buttons(display_delete_if_authorized hash_for_omaha_report_path(:id => report).merge(:auth_object => report, :authorizer => authorizer),
+                                           :confirm => _("Delete report for %s?") % report.host.try(:name)) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate_with_info @omaha_reports %>

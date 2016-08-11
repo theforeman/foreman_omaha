@@ -1,0 +1,31 @@
+# TODO: remove this file by either moving cops here or fixing code
+inherit_from: .rubocop_todo.yml
+
+Rails:
+  Enabled: true
+
+# Don't enforce documentation
+Style/Documentation:
+  Enabled: false
+
+Rails/ActionFilter:
+  EnforcedStyle: action
+
+Metrics/MethodLength:
+  Max: 20
+
+Style/Next:
+  Enabled: false
+
+# Support both ruby19 and hash_rockets
+Style/HashSyntax:
+  Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'
+
+Performance/FixedSize:
+  Exclude:
+    - 'test/**/*'
+
