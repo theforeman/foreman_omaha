@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.date        = Date.today.to_s
   s.authors     = ['Timo Goebel']
   s.email       = ['mail@timogoebel.name']
-  s.homepage    = 'http://github.com/timogoebel/foreman_omaha'
+  s.homepage    = 'http://github.com/theforeman/foreman_omaha'
   s.licenses    = ['GPL-3']
   s.summary     = 'This plug-in adds support for the Omaha procotol to The Foreman.'
   # also update locale/gemspec.rb
