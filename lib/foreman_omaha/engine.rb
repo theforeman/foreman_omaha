@@ -27,7 +27,7 @@ module ForemanOmaha
           permission :view_omaha_reports, :omaha_reports => [:index, :show, :auto_complete_search],
                                           :'api/v2/omaha_reports' => [:index, :show, :last]
           permission :destroy_omaha_reports, :omaha_reports => [:destroy],
-                                             :'api/v2/config_reports' => [:destroy]
+                                             :'api/v2/omaha_reports' => [:destroy]
           permission :upload_omaha_reports, :omaha_reports => [:create],
                                             :'api/v2/omaha_reports' => [:create]
         end
