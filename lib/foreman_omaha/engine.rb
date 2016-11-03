@@ -45,8 +45,8 @@ module ForemanOmaha
              after: :reports
       end
 
-      if respond_to?(:hosts_controller_action_scope)
-        hosts_controller_action_scope(:index) { |base_scope| base_scope.includes(:last_omaha_report_object) }
+      if respond_to?(:add_controller_action_scope)
+        add_controller_action_scope(HostsController, :index) { |base_scope| base_scope.includes(:last_omaha_report_object) }
       end
     end
 
