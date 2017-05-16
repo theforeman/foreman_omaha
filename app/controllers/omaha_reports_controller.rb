@@ -14,9 +14,13 @@ class OmahaReportsController < ApplicationController
   def show
     # are we searching for the last report?
     if params[:id] == 'last'
-      conditions = {
-        :host_id => resource_finder(Host.authorized(:view_hosts), params[:host_id]).try(:id)
-      } if params[:host_id].present?
+      conditions = if params[:host_id].present?
+                     {
+                       :host_id => resource_finder(Host.authorized(:view_hosts), params[:host_id]).try(:id)
+                     }
+                   else
+                     {}
+                   end
       params[:id] = resource_base.where(conditions).maximum(:id)
     end
 

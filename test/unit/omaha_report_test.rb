@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 
 class OmahaReportTest < ActiveSupport::TestCase
   setup do
-    User.current = User.find_by_login 'admin'
+    User.current = User.find_by(login: 'admin')
     @report = FactoryGirl.create(:omaha_report)
   end
 
@@ -79,7 +79,7 @@ class OmahaReportTest < ActiveSupport::TestCase
         'reported_at' => Time.now.utc.to_s
       }
       assert_raise ArgumentError do
-       ForemanOmaha::OmahaReport.import(report)
+        ForemanOmaha::OmahaReport.import(report)
       end
     end
   end

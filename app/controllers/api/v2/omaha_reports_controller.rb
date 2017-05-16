@@ -31,8 +31,7 @@ module Api
       api :GET, '/omaha_reports/:id/', N_('Show a omaha report')
       param :id, :identifier, :required => true
 
-      def show
-      end
+      def show; end
 
       api :POST, '/omaha_reports', N_('Create a omaha report')
       param_group :omaha_report, :as => :create

@@ -1,7 +1,7 @@
 module ForemanOmaha
   class OmahaReport < ::Report
     enum :status => [:unknown, :complete, :downloading, :downloaded,
-              :installed, :instance_hold, :error]
+                     :installed, :instance_hold, :error]
 
     scoped_search :on => :omaha_version, :rename => :version, :complete_value => true
     scoped_search :on => :status, :complete_value => statuses
