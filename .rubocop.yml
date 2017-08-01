@@ -34,3 +34,6 @@ Performance/FixedSize:
 
 Rails/HttpPositionalArguments:
   Enabled: false
+ 
+Style/SymbolArray:
+  Enabled: false
