@@ -85,15 +85,15 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
   end
 
   test 'cannot view the last report without hosts view permission' do
-    setup_user('view', 'omaha_reports')
     report = FactoryGirl.create(:report)
+    setup_user('view', 'omaha_reports')
     get :last, { :host_id => report.host.id }, set_session_user.merge(:user => User.current.id)
     assert_response :not_found
   end
 
   describe 'unpriveliged user' do
     def setup
-      User.current = users(:one)
+      User.current = FactoryGirl.create(:user, :admin)
     end
 
     test 'hosts with a registered smart proxy on should create a report successfully' do
@@ -103,7 +103,9 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
       proxy = FactoryGirl.create(:smart_proxy, :omaha)
       host = URI.parse(proxy.url).host
       Resolv.any_instance.stubs(:getnames).returns([host])
-      post :create, :omaha_report => create_report
+      as_user :one do
+        post :create, :omaha_report => create_report
+      end
       assert_equal proxy, @controller.detected_proxy
       assert_response :created
     end
