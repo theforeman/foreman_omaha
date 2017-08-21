@@ -1,7 +1,7 @@
 module ForemanOmaha
   class FactName < ::FactName
     def origin
-      'Omaha'
+      'foreman_omaha/Omaha'
     end
   end
 end

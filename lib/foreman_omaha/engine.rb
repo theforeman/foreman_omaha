@@ -63,6 +63,18 @@ module ForemanOmaha
       end
     end
 
+    initializer 'foreman_omaha.assets.precompile' do |app|
+      app.config.assets.precompile += %w(foreman_omaha/Omaha.png)
+    end
+
+    initializer 'foreman_omaha.configure_assets', :group => :assets do
+      SETTINGS[:foreman_omaha] = {
+        :assets => {
+          :precompile => ['foreman_omaha/Omaha.png']
+        }
+      }
+    end
+
     rake_tasks do
       Rake::Task['db:seed'].enhance do
         ForemanOmaha::Engine.load_seed
