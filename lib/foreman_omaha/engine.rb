@@ -6,6 +6,7 @@ module ForemanOmaha
     config.autoload_paths += Dir["#{config.root}/app/helpers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/services"]
+    config.autoload_paths += Dir["#{config.root}/app/lib"]
 
     # Add any db migrations
     initializer 'foreman_omaha.load_app_instance_data' do |app|
@@ -30,6 +31,7 @@ module ForemanOmaha
                                              :'api/v2/omaha_reports' => [:destroy]
           permission :upload_omaha_reports, :omaha_reports => [:create],
                                             :'api/v2/omaha_reports' => [:create]
+          permission :view_smart_proxies, :smart_proxies => [:omaha_dashboard, :omaha_releases]
         end
 
         role 'Omaha reports viewer',
@@ -58,6 +60,10 @@ module ForemanOmaha
 
         Host::Managed.send(:include, ForemanOmaha::HostExtensions)
         HostsHelper.send(:include, ForemanOmaha::HostsHelperExtensions)
+        SmartProxiesHelper.send(:include, ForemanOmaha::SmartProxiesHelperExtensions)
+        ::SmartProxiesController.send(:prepend, ForemanOmaha::SmartProxiesController)
+
+        ProxyStatus.status_registry.add(ProxyStatus::Omaha)
       rescue => e
         Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
       end

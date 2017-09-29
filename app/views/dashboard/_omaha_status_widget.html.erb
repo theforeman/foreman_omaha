@@ -1,0 +1,19 @@
+<h4 class="header">
+  <%= title = _('Host Upgrade Progress') %>
+</h4>
+<% if SETTINGS[:version].short >= '1.16' && false %>
+  <div id="omaha_status_distribution_chart">
+  </div>
+  <%= mount_react_component(
+    'PieChart',
+    '#omaha_status_distribution_chart',
+    ForemanOmaha::OmahaDashboard::StatusDistributionChart.new.to_json
+  ) %>
+<% else %>
+ <%= flot_pie_chart(
+   'omaha_status_distribution_chart',
+   title,
+   ForemanOmaha::OmahaDashboard::StatusDistributionChart.new.to_a,
+   :class => 'statistics-pie small'
+ ) %>
+<% end %>

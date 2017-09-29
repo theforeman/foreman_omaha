@@ -1,0 +1,4 @@
+<h4 class="header">
+  <%= title = _('Version Breakdown') %>
+</h4>
+<%= flot_chart('omaha_version_breakdown', '', _('Host Count'), omaha_version_breakdown_chart, :class => 'statistics-chart stack') %>

@@ -15,7 +15,10 @@ Rails/ActionFilter:
   EnforcedStyle: action
 
 Metrics/MethodLength:
-  Max: 20
+  Max: 40
+
+Metrics/ModuleLength:
+  Max: 150
 
 Style/Next:
   Enabled: false
@@ -36,4 +39,10 @@ Rails/HttpPositionalArguments:
   Enabled: false
 
 Style/SymbolArray:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/MultilineBlockChain:
   Enabled: false

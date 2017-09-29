@@ -26,4 +26,11 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :smart_proxies do
+    member do
+      get 'omaha_dashboard'
+      get 'omaha_releases'
+    end
+  end
 end
