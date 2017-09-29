@@ -1,0 +1,32 @@
+<% javascript 'charts' %>
+<% # Workaround to redraw the react charts at tab change %>
+<%= javascript_tag "var fakeWindowResize = function() { window.dispatchEvent(new Event('resize')); }; $(document).on('ContentLoad', function() { $('.nav-tabs a').on('shown.bs.tab', fakeWindowResize); });" %>
+<ul id="proxy-omaha-tab" class="nav nav-tabs nav-tabs-pf">
+  <li class="active"><a href="#omaha_dashboard" data-toggle="tab"><%= _("General") %></a></li>
+  <li><a href="#omaha_content" data-toggle="tab"><%= _('Content') %></a></li>
+</ul>
+<div class="tab-content" id="proxy-omaha-tab-content">
+  <div class="tab-pane active in dashboard" id="omaha_dashboard">
+    <div class="row">
+      <div class="col-md-6">
+        <%= show_feature_version('omaha') %>
+        <div class="row">
+          <div class="col-md-4"><%= _('CoreOS Hosts:') %></div>
+          <div class="col-md-8">
+            <%= link_to_if_authorized(Host::Managed.search_for("os = CoreOS").count, hash_for_hosts_path(:search => "os = CoreOS")) %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"><%= _('Omaha Hosts:') %></div>
+          <div class="col-md-8">
+            <%= link_to_if_authorized(ForemanOmaha::OmahaDashboard.hosts.count, hash_for_omaha_reports_path) %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix row container-cards-pf container-fluid" data-ajax-url="<%= omaha_dashboard_smart_proxy_path(@smart_proxy) %>" data-on-complete="refreshCharts"><%= spinner %></div>
+  </div>
+  <div class="tab-pane" id="omaha_content" data-ajax-url="<%= omaha_releases_smart_proxy_path(@smart_proxy) %>">
+    <%= spinner %>
+  </div>
+</div>

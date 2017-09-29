@@ -1,0 +1,10 @@
+<h4 class="header">
+  <%= title = _('Version Distribution') %>
+</h4>
+<div id="omaha_version_distribution_chart">
+</div>
+<%= mount_react_component(
+  'PieChart',
+  '#omaha_version_distribution_chart',
+  ForemanOmaha::OmahaDashboard::VersionDistributionChart.new.to_json
+) %>

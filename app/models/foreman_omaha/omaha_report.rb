@@ -14,7 +14,7 @@ module ForemanOmaha
       'status'
     end
 
-    def to_label
+    def self.to_label(status)
       case status.to_sym
       when :complete
         _('Complete')
@@ -29,8 +29,35 @@ module ForemanOmaha
       when :error
         _('Error')
       else
-        _('unknown')
+        _('Unknown')
       end
+    end
+
+    def self.to_description(status, version)
+      case status.to_sym
+      when :complete
+        _('The host has been updated successfully and is now running version %s.') % version
+      when :downloading
+        _('The host has just started downloading the update package.')
+      when :downloaded
+        _('The host has downloaded the update package and will install it now.')
+      when :installed
+        _('The host has installed the update package but is not using it yet.')
+      when :instance_hold
+        _('An update for this host is pending but it was put on hold because of the rollout policy.')
+      when :error
+        _('The host reported an error while updating.')
+      else
+        _('The status of this host is unknown.')
+      end
+    end
+
+    def to_description
+      self.class.to_description(status, omaha_version)
+    end
+
+    def to_label
+      self.class.to_label(status)
     end
 
     def operatingsystem

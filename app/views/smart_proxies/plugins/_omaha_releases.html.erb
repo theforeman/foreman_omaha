@@ -1,0 +1,81 @@
+<div class="panel-group" id="accordion-markup">
+  <% @tracks.each do |track| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion-markup" href="#collapse-<%= track[:name] %>">
+            <%= _('Channel: %s') % track[:name].capitalize %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapse-<%= track[:name] %>" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="container-fluid container-cards-pf">
+            <div class="row row-cards-pf">
+              <div class="col-xs-6 col-sm-4 col-md-4">
+                <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                  <h2 class="card-pf-title">
+                    <span class="fa fa-cube"></span><%= _('Current Version') %>
+                  </h2>
+                  <div class="card-pf-body">
+                    <p class="card-pf-aggregate-status-notifications">
+                    <span class="card-pf-aggregate-status-notification">
+                      <%=
+                        track[:architectures].map do |architecture|
+                          architecture[:current_release][:name]
+                        end.join(', ')
+                      %>
+                    </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-4 col-md-4">
+                <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                  <h2 class="card-pf-title">
+                    <span class="pficon pficon-server"></span><%= _('Hosts') %>
+                  </h2>
+                  <div class="card-pf-body">
+                    <p class="card-pf-aggregate-status-notifications">
+                    <span class="card-pf-aggregate-status-notification"><%= link_to_if_authorized(track[:host_count], hash_for_hosts_path(:search => "os_family = Coreos and os_release_name = %s" % track[:name])) %></span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h4><%= _('Version Breakdown') %></h4>
+              <%= omaha_version_breakdown_bar(track[:name], track[:architectures].first[:releases].map { |release| release[:name] }) %>
+            </div>
+          </div>
+          <table class="<%= table_css_classes 'table-fixed' %>">
+            <thead>
+              <tr>
+                <th class="col-md-8"><%= _("Release") %></th>
+                <th class="col-md-2"><%= _("Architecture") %></th>
+                <th class="col-md-1"><%= _("Hosts") %></th>
+                <th class="col-md-1"><%= _("Actions") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% track[:architectures].each do |architecture| %>
+                <% architecture[:releases].each do |release| %>
+                  <tr>
+                    <td><%= release[:name] %></td>
+                    <td><%= release[:architecture] %></td>
+                    <td>
+                      <%= coreos_hosts_count_link(track[:name], release[:name]) %>
+                    </td>
+                    <td></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
