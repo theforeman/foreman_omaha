@@ -2,7 +2,9 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.0
+  TargetRubyVersion: 2.2
+  Exclude:
+    - 'Rakefile'
 
 Rails:
   Enabled: true

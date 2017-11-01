@@ -29,7 +29,7 @@ namespace :foreman_omaha do
                          "#{ForemanOmaha::Engine.root}/lib/**/*.rb",
                          "#{ForemanOmaha::Engine.root}/test/**/*.rb"]
       end
-    rescue
+    rescue StandardError
       puts 'Rubocop not loaded.'
     end
 

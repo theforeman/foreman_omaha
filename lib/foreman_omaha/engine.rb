@@ -58,7 +58,7 @@ module ForemanOmaha
 
         Host::Managed.send(:include, ForemanOmaha::HostExtensions)
         HostsHelper.send(:include, ForemanOmaha::HostsHelperExtensions)
-      rescue => e
+      rescue StandardError => e
         Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
       end
     end
