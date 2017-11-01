@@ -60,30 +60,76 @@ class OmahaReportTest < ActiveSupport::TestCase
   end
 
   context '#import' do
-    test 'should import a report' do
-      host = FactoryBot.create(:host)
-      report = {
+    let(:host) { FactoryBot.create(:host) }
+    let(:group) { FactoryBot.create(:omaha_group, :name => 'Stable', :uuid => 'stable') }
+    let(:report_data) do
+      {
         'host' => host.name,
         'status' => 'downloading',
-        'omaha_version' => '1068.9.0',
+        'omaha_version' => '494.5.0',
+        'omaha_group' => 'stable',
+        'machineid' => '8e9450f47a4c47adbfe48b946e201c84',
+        'oem' => 'rackspace',
         'reported_at' => Time.now.utc.to_s
       }
+    end
+
+    test 'should import a report' do
       assert_difference('ForemanOmaha::OmahaReport.count') do
-        ForemanOmaha::OmahaReport.import(report)
+        ForemanOmaha::OmahaReport.import(report_data)
       end
     end
 
     test 'should not import a report with invalid value' do
-      host = FactoryBot.create(:host)
-      report = {
-        'host' => host.name,
-        'status' => 'invalid',
-        'omaha_version' => '1068.9.0',
-        'reported_at' => Time.now.utc.to_s
-      }
+      report_data['status'] = 'invalid'
       assert_raise ArgumentError do
-        ForemanOmaha::OmahaReport.import(report)
+        ForemanOmaha::OmahaReport.import(report_data)
       end
+    end
+
+    test 'should create host omaha facet' do
+      assert_nil host.omaha_facet
+      assert_not_nil group
+      ForemanOmaha::OmahaReport.import(report_data)
+      facet = host.reload.omaha_facet
+      assert_not_nil facet
+      assert_equal host, facet.host
+      assert_equal report_data['reported_at'].to_date, facet.last_report.to_date
+      assert_equal report_data['status'], facet.status
+      assert_equal report_data['machineid'], facet.machineid
+      assert_equal report_data['oem'], facet.oem
+      assert_equal report_data['omaha_version'], facet.version
+      assert_equal group, facet.omaha_group
+    end
+
+    test 'should update host omaha facet' do
+      assert_not_nil group
+      ForemanOmaha::OmahaReport.import(report_data)
+      time = Time.now.advance(seconds: 10).utc.to_s
+      new_report = report_data.merge(
+        'status' => 'complete',
+        'reported_at' => time,
+        'omaha_version' => '1068.9.0'
+      ).except('host')
+      ForemanOmaha::OmahaReport.import(new_report)
+      facet = host.reload.omaha_facet
+      assert_not_nil facet
+      assert_equal host, facet.host
+      assert_equal time.to_date, facet.last_report.to_date
+      assert_equal 'complete', facet.status
+      assert_equal new_report['machineid'], facet.machineid
+      assert_equal 'rackspace', facet.oem
+      assert_equal '1068.9.0', facet.version
+      assert_equal group, facet.omaha_group
+    end
+
+    test 'should detect omaha group by os version' do
+      assert_not_nil group
+      FactoryBot.create(:coreos)
+      ForemanOmaha::OmahaReport.import(report_data.except('omaha_group'))
+      facet = host.reload.omaha_facet
+      assert_not_nil facet
+      assert_equal group, facet.omaha_group
     end
   end
 end

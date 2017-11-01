@@ -13,10 +13,13 @@ module Api
       def_param_group :omaha_report do
         param :report, Hash, :required => true, :action_aware => true do
           param :host, String, :required => true, :desc => N_('Hostname or certname')
-          param :status, String,
+          param :status, ::ForemanOmaha::OmahaReport.statuses.keys,
                 :required => true,
-                :desc => N_('Omaha status, can be one of %s') % ::ForemanOmaha::OmahaReport.statuses.keys.to_sentence
-          param :omaha_version, String, :required => true, :desc => N_('Omaha OS version')
+                :desc => N_('Omaha update status')
+          param :omaha_version, String, :required => true, :desc => N_('Omaha OS version using semantic versioning, e.g. 1590.0.0')
+          param :machineid, String, :required => true, :desc => N_('Unique machine id of the host')
+          param :omaha_group, String, :required => true, :desc => N_('The uuid if the channel that the host is attached to. Use alpha, beta or stable for built-in channels.')
+          param :oem, String, :desc => N_('OEM identifier')
         end
       end
 
@@ -51,6 +54,7 @@ module Api
       end
 
       api :GET, '/hosts/:host_id/omaha_reports/last', N_('Show the last report for a host')
+      param :host_id, String, :required => true, :desc => N_('ID of host')
       param :id, :identifier, :required => true
 
       def last

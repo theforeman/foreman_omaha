@@ -3,17 +3,30 @@ Rails.application.routes.draw do
     scope '(:apiv)', :module => :v2,
                      :defaults => { :apiv => 'v2' },
                      :apiv => /v1|v2/,
-                     :constraints => ApiConstraints.new(:version => 2) do
+                     :constraints => ApiConstraints.new(:version => 2, :default => true) do
       constraints(:id => /[^\/]+/) do
         resources :omaha_reports, :only => [:index, :show, :destroy] do
           get :last, :on => :collection
         end
+        resources :omaha_groups, :only => [:index]
       end
       resources :omaha_reports, :only => [:create]
     end
   end
 
   resources :omaha_reports, :only => [:index, :show, :destroy] do
+    collection do
+      get 'auto_complete_search'
+    end
+  end
+
+  resources :omaha_groups, :only => [:index] do
+    collection do
+      get 'auto_complete_search'
+    end
+  end
+
+  resources :omaha_hosts, only: :index do
     collection do
       get 'auto_complete_search'
     end

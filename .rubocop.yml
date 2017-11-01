@@ -17,7 +17,7 @@ Rails/ActionFilter:
   EnforcedStyle: action
 
 Metrics/MethodLength:
-  Max: 20
+  Max: 25
 
 Style/Next:
   Enabled: false
@@ -34,8 +34,25 @@ Performance/FixedSize:
   Exclude:
     - 'test/**/*'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*'
+
 Rails/HttpPositionalArguments:
   Enabled: false
 
 Style/SymbolArray:
   Enabled: false
+
+# May be enabled for Foreman >= 1.16
+Rails/ApplicationRecord:
+  Enabled: false
+
+Lint/BooleanSymbol:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 180

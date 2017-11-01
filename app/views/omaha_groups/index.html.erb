@@ -1,0 +1,31 @@
+<% title _('Omaha Groups') %>
+
+<%= render partial: 'application/foreman_omaha/toolbar', locals: { count: @omaha_groups.count} %>
+
+<div class="container-fluid">
+  <div class="list-group list-view-pf list-view-pf-view" style="max-height: initial;">
+    <% @omaha_groups.each do |group| %>
+      <div class="list-group-item">
+        <div class="list-view-pf-main-info">
+          <div class="list-view-pf-left">
+            <%= icon_text('ticket', '', :kind => 'fa', :class => 'list-view-pf-icon-sm') %>
+          </div>
+          <div class="list-view-pf-body">
+            <div class="list-view-pf-description">
+              <div class="list-group-item-heading">
+                <%= group.name %>
+              </div>
+            </div>
+            <div class="list-view-pf-additional-info">
+              <div class="list-view-pf-additional-info-item" style="white-space: nowrap;">
+                <%= icon_text('server', '', :kind => 'pficon') %>
+                <strong><%= link_to(facets_count(:omaha_facet).fetch(group.id, 0), hosts_path(:search => "omaha_group = #{group}")) %></strong>
+                <%= n_('Host', 'Hosts', facets_count(:omaha_facet).fetch(group.id, 0)) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
