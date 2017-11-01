@@ -2,14 +2,23 @@ module ForemanOmaha
   module HostsHelperExtensions
     extend ActiveSupport::Concern
 
-    included do
-      alias_method_chain :show_appropriate_host_buttons, :foreman_omaha
+    module Overrides
+      def show_appropriate_host_buttons(host)
+        buttons = super
+        if host.omaha_reports.any?
+          buttons << link_to_if_authorized(
+            _('Omaha'),
+            hash_for_host_omaha_reports_path(:host_id => host),
+            :title => _('Browse host omaha reports'),
+            :class => 'btn btn-default'
+          )
+        end
+        buttons.compact
+      end
     end
 
-    def show_appropriate_host_buttons_with_foreman_omaha(host)
-      buttons = show_appropriate_host_buttons_without_foreman_omaha(host)
-      buttons << (link_to_if_authorized(_('Omaha'), hash_for_host_omaha_reports_path(:host_id => host), :title => _('Browse host omaha reports'), :class => 'btn btn-default') if host.omaha_reports.any?)
-      buttons.compact
+    included do
+      prepend Overrides
     end
   end
 end
