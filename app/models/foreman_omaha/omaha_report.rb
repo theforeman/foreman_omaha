@@ -1,7 +1,6 @@
 module ForemanOmaha
   class OmahaReport < ::Report
-    enum :status => [:unknown, :complete, :downloading, :downloaded,
-                     :installed, :instance_hold, :error]
+    enum :status => OmahaFacet::VALID_OMAHA_STATUSES
 
     scoped_search :on => :omaha_version, :rename => :version, :complete_value => true
     scoped_search :on => :status, :complete_value => statuses
@@ -14,24 +13,11 @@ module ForemanOmaha
       'status'
     end
 
-    def to_label
-      case status.to_sym
-      when :complete
-        _('Complete')
-      when :downloading
-        _('Downloading')
-      when :downloaded
-        _('Downloaded')
-      when :installed
-        _('Installed')
-      when :instance_hold
-        _('Instance Hold')
-      when :error
-        _('Error')
-      else
-        _('unknown')
-      end
+    def self.humanize_class_name
+      N_('Omaha Report')
     end
+
+    delegate :to_label, :to => :status_mapper
 
     def operatingsystem
       return if omaha_version.blank?
@@ -49,6 +35,12 @@ module ForemanOmaha
       omaha_version.gsub(/^\d+\.(\d\.\d)$/, '\1')
     rescue StandardError
       nil
+    end
+
+    private
+
+    def status_mapper
+      StatusMapper.new(status)
     end
   end
 end

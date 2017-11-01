@@ -1,0 +1,49 @@
+<% title _('Omaha Hosts') %>
+
+<%= render partial: 'application/foreman_omaha/toolbar', locals: { count: @hosts.count} %>
+
+<div class="container-fluid">
+  <div class="list-group list-view-pf list-view-pf-equalized-column" style="max-height: initial;">
+    <% @hosts.each do |host| %>
+      <div class="list-group-item">
+        <div class="list-view-pf-main-info">
+          <div class="list-view-pf-left">
+            <span class="<%= list_view_class_for_omaha_status(host.omaha_facet.status) %>" title="<%= host.omaha_facet.to_status_label %>"></span>
+          </div>
+          <div class="list-view-pf-body">
+            <div class="list-view-pf-description">
+              <div class="list-group-item-heading">
+                <%= link_to_if_authorized(host, hash_for_host_path(host)) %>
+              </div>
+            </div>
+            <div class="list-view-pf-additional-info">
+              <% if host.operatingsystem %>
+                <div class="list-view-pf-additional-info-item">
+                  <%= icon(host.operatingsystem, :size => '16x16') %>&nbsp;
+                  <%= link_to_if_authorized(host.operatingsystem.release, hash_for_edit_operatingsystem_path(host.operatingsystem)) %>
+                </div>
+              <% end %>
+              <div class="list-view-pf-additional-info-item" style="white-space: nowrap;">
+                <%= icon_text('clock-o', '', :kind => 'fa') %>
+                <%= last_omaha_report_column(host) %>
+              </div>
+              <div class="list-view-pf-additional-info-item" style="white-space: nowrap;">
+                <%= icon_text('ticket', '', :kind => 'fa') %>
+                <%= host.omaha_facet.omaha_group.try(:name) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script>
+// Equalize column width
+$(document).ready(function () {
+  var widest = 0;
+  $('.list-view-pf-equalized-column .list-view-pf-additional-info-item').each( function() {
+    widest = $(this).width() > widest ? $(this).width() : widest;
+  }).width(widest);
+});
+</script>

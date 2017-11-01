@@ -1,0 +1,29 @@
+<table class="<%= table_css_classes %> table-fixed">
+  <thead>
+    <tr>
+      <th colspan="2"><%= _('Omaha') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= _('Last checkin') %></td>
+      <td><%= @host.omaha_facet.last_report.to_formatted_s(:long_ordinal) %></td>
+    </tr>
+    <tr>
+      <td><%= _('Version') %></td>
+      <td><%= @host.omaha_facet.version %></td>
+    </tr>
+    <tr>
+      <td><%= _('Group') %></td>
+      <td><%= @host.omaha_facet.omaha_group.try(:name) %></td>
+    </tr>
+    <tr>
+      <td><%= _('OEM') %></td>
+      <td><%= @host.omaha_facet.oem %></td>
+    </tr>
+    <tr>
+      <td><%= _('Machine ID') %></td>
+      <td class="ellipsis"><%= @host.omaha_facet.machineid %></td>
+    </tr>
+  </tbody>
+</table>

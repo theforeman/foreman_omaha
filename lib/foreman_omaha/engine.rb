@@ -16,7 +16,7 @@ module ForemanOmaha
 
     initializer 'foreman_omaha.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_omaha do
-        requires_foreman '>= 1.12'
+        requires_foreman '>= 1.15'
 
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
@@ -24,12 +24,25 @@ module ForemanOmaha
 
         # Add permissions
         security_block :foreman_omaha do
-          permission :view_omaha_reports, :omaha_reports => [:index, :show, :auto_complete_search],
-                                          :'api/v2/omaha_reports' => [:index, :show, :last]
-          permission :destroy_omaha_reports, :omaha_reports => [:destroy],
-                                             :'api/v2/omaha_reports' => [:destroy]
-          permission :upload_omaha_reports, :omaha_reports => [:create],
-                                            :'api/v2/omaha_reports' => [:create]
+          permission :view_omaha_reports, {
+            :omaha_reports => [:index, :show, :auto_complete_search],
+            :'api/v2/omaha_reports' => [:index, :show, :last]
+          }, :resource_type => 'ForemanOmaha::OmahaReport'
+
+          permission :destroy_omaha_reports, {
+            :omaha_reports => [:destroy],
+            :'api/v2/omaha_reports' => [:destroy]
+          }, :resource_type => 'ForemanOmaha::OmahaReport'
+
+          permission :upload_omaha_reports, {
+            :omaha_reports => [:create],
+            :'api/v2/omaha_reports' => [:create]
+          }, :resource_type => 'ForemanOmaha::OmahaReport'
+
+          permission :view_omaha_groups, {
+            :omaha_groups => [:index, :auto_complete_search],
+            :'api/v2/omaha_groups' => [:index]
+          }, :resource_type => 'ForemanOmaha::OmahaGroup'
         end
 
         role 'Omaha reports viewer',
@@ -40,14 +53,45 @@ module ForemanOmaha
         # add menu entry
         menu :top_menu, :omaha_reports,
              :url_hash => { controller: :omaha_reports, action: :index },
-             :caption => N_('Omaha reports'),
+             :caption => N_('Omaha Reports'),
              :parent => :monitor_menu,
-             after: :reports
-      end
+             :after => :reports
 
-      if respond_to?(:add_controller_action_scope)
+        menu :top_menu, :omaha_hosts,
+             :url_hash => { :controller => :omaha_hosts, :action => :index },
+             :caption => N_('Omaha Hosts'),
+             :parent => :hosts_menu,
+             :after => :hosts
+
+        divider :top_menu, :caption => N_('Omaha'), :parent => :configure_menu, :last => true
+
+        menu :top_menu, :omaha_groups,
+             :url_hash => { :controller => :omaha_groups, :action => :index },
+             :caption => N_('Omaha Groups'),
+             :parent => :configure_menu,
+             :last => :true
+
+        # Omaha Facet
+        register_facet(ForemanOmaha::OmahaFacet, :omaha_facet) do
+          api_view :list => 'foreman_omaha/api/v2/omaha_facets/base_with_root', :single => 'foreman_omaha/api/v2/omaha_facets/show'
+        end
+
+        # extend host show page
+        extend_page('hosts/show') do |context|
+          context.add_pagelet :main_tabs,
+                              :name => N_('Omaha'),
+                              :partial => 'hosts/omaha_tab',
+                              :onlyif => proc { |host| host.omaha_facet }
+        end
+
         add_controller_action_scope(HostsController, :index) { |base_scope| base_scope.includes(:last_omaha_report_object) }
       end
+
+      # Extend built in permissions
+      Foreman::AccessControl.permission(:view_hosts).actions.concat [
+        'omaha_hosts/index',
+        'omaha_hosts/auto_complete_search'
+      ]
     end
 
     # Include concerns in this config.to_prepare block
@@ -57,6 +101,7 @@ module ForemanOmaha
         ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
 
         Host::Managed.send(:include, ForemanOmaha::HostExtensions)
+        Host::Managed.send(:include, ForemanOmaha::OmahaFacetHostExtensions)
         HostsHelper.send(:include, ForemanOmaha::HostsHelperExtensions)
       rescue StandardError => e
         Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"

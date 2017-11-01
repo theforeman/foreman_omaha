@@ -1,10 +1,8 @@
 require File.expand_path('../lib/foreman_omaha/version', __FILE__)
-require 'date'
 
 Gem::Specification.new do |s|
   s.name        = 'foreman_omaha'
   s.version     = ForemanOmaha::VERSION
-  s.date        = Date.today.to_s
   s.authors     = ['Timo Goebel']
   s.email       = ['mail@timogoebel.name']
   s.homepage    = 'http://github.com/theforeman/foreman_omaha'

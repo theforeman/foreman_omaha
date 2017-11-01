@@ -1,6 +1,7 @@
 module ForemanOmaha
   module HostExtensions
     extend ActiveSupport::Concern
+
     included do
       has_many :omaha_reports, :class_name => '::ForemanOmaha::OmahaReport',
                                :foreign_key => :host_id, :dependent => :destroy

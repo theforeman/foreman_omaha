@@ -42,17 +42,6 @@ class OmahaReportsController < ApplicationController
     end
   end
 
-  # TODO: Remove for Foreman 1.14+
-  def resource_base_with_search
-    resource_base.search_for(params[:search], :order => params[:order])
-  end
-
-  # TODO: Remove for Foreman 1.14+
-  def resource_base_search_and_page(tables = [])
-    base = tables.empty? ? resource_base_with_search : resource_base_with_search.eager_load(*tables)
-    base.paginate(:page => params[:page], :per_page => params[:per_page])
-  end
-
   private
 
   def resource_base
