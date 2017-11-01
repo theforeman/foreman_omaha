@@ -41,13 +41,13 @@ module ForemanOmaha
 
     def osmajor
       omaha_version.gsub(/^(\d+)\.\d\.\d$/, '\1')
-    rescue
+    rescue StandardError
       nil
     end
 
     def osminor
       omaha_version.gsub(/^\d+\.(\d\.\d)$/, '\1')
-    rescue
+    rescue StandardError
       nil
     end
   end
