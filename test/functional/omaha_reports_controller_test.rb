@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 
 class OmahaReportsControllerTest < ActionController::TestCase
   test '#index' do
-    FactoryGirl.create(:omaha_report)
+    FactoryBot.create(:omaha_report)
     get :index, {}, set_session_user
     assert_response :success
     assert_not_nil assigns('omaha_reports')
@@ -10,7 +10,7 @@ class OmahaReportsControllerTest < ActionController::TestCase
   end
 
   test '#show' do
-    report = FactoryGirl.create(:omaha_report)
+    report = FactoryBot.create(:omaha_report)
     get :show, { :id => report.id }, set_session_user
     assert_template 'show'
   end
@@ -22,19 +22,19 @@ class OmahaReportsControllerTest < ActionController::TestCase
   end
 
   test '#show last' do
-    FactoryGirl.create(:omaha_report)
+    FactoryBot.create(:omaha_report)
     get :show, { :id => 'last' }, set_session_user
     assert_template 'show'
   end
 
   test '404 on #show last when no reports available' do
-    get :show, { :id => 'last', :host_id => FactoryGirl.create(:host) }, set_session_user
+    get :show, { :id => 'last', :host_id => FactoryBot.create(:host) }, set_session_user
     assert_response :missing
     assert_template 'common/404'
   end
 
   test '#show last report for host' do
-    report = FactoryGirl.create(:omaha_report)
+    report = FactoryBot.create(:omaha_report)
     get :show, { :id => 'last', :host_id => report.host.to_param }, set_session_user
     assert_template 'show'
   end
@@ -46,7 +46,7 @@ class OmahaReportsControllerTest < ActionController::TestCase
   end
 
   test '#destroy' do
-    report = FactoryGirl.create(:omaha_report)
+    report = FactoryBot.create(:omaha_report)
     delete :destroy, { :id => report }, set_session_user
     assert_redirected_to omaha_reports_url
     assert !ConfigReport.exists?(report.id)

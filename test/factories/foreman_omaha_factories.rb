@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :omaha_report, :class => 'ForemanOmaha::OmahaReport' do
     host
     sequence(:reported_at) { |n| n.minutes.ago }

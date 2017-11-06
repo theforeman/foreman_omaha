@@ -2,11 +2,11 @@ require 'test_plugin_helper'
 
 class OmahaReportTest < ActiveSupport::TestCase
   setup do
-    User.current = FactoryGirl.create(:user, :admin)
+    User.current = FactoryBot.create(:user, :admin)
   end
 
   context 'status' do
-    let(:report) { FactoryGirl.build(:omaha_report) }
+    let(:report) { FactoryBot.build(:omaha_report) }
 
     test 'should be complete' do
       report.status = 'complete'
@@ -46,8 +46,8 @@ class OmahaReportTest < ActiveSupport::TestCase
   end
 
   context 'operatingsystem' do
-    let(:os) { FactoryGirl.create(:coreos, :major => '1068', :minor => '9.0') }
-    let(:report) { FactoryGirl.create(:omaha_report) }
+    let(:os) { FactoryBot.create(:coreos, :major => '1068', :minor => '9.0') }
+    let(:report) { FactoryBot.create(:omaha_report) }
 
     test 'should get operatingsystem' do
       assert_equal os, report.operatingsystem
@@ -61,7 +61,7 @@ class OmahaReportTest < ActiveSupport::TestCase
 
   context '#import' do
     test 'should import a report' do
-      host = FactoryGirl.create(:host)
+      host = FactoryBot.create(:host)
       report = {
         'host' => host.name,
         'status' => 'downloading',
@@ -74,7 +74,7 @@ class OmahaReportTest < ActiveSupport::TestCase
     end
 
     test 'should not import a report with invalid value' do
-      host = FactoryGirl.create(:host)
+      host = FactoryBot.create(:host)
       report = {
         'host' => host.name,
         'status' => 'invalid',
