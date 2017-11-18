@@ -1,3 +1,5 @@
+require 'jquery-matchheight-rails'
+
 module ForemanOmaha
   class Engine < ::Rails::Engine
     engine_name 'foreman_omaha'
@@ -40,7 +42,7 @@ module ForemanOmaha
           }, :resource_type => 'ForemanOmaha::OmahaReport'
 
           permission :view_omaha_groups, {
-            :omaha_groups => [:index, :auto_complete_search],
+            :omaha_groups => [:index, :auto_complete_search, :show],
             :'api/v2/omaha_groups' => [:index, :show]
           }, :resource_type => 'ForemanOmaha::OmahaGroup'
         end
@@ -108,16 +110,18 @@ module ForemanOmaha
       end
     end
 
+    # Precompile any JS or Image files under app/assets/
+    assets_to_precompile =
+      Dir.chdir(root) do
+        Dir['app/assets/javascripts/**/*', 'app/assets/images/**/*'].map do |f|
+          f.split(File::SEPARATOR, 4).last
+        end
+      end
     initializer 'foreman_omaha.assets.precompile' do |app|
-      app.config.assets.precompile += %w[foreman_omaha/Omaha.png]
+      app.config.assets.precompile += assets_to_precompile
     end
-
-    initializer 'foreman_omaha.configure_assets', :group => :assets do
-      SETTINGS[:foreman_omaha] = {
-        :assets => {
-          :precompile => ['foreman_omaha/Omaha.png']
-        }
-      }
+    initializer 'foreman_omaha.configure_assets', group: :assets do
+      SETTINGS[:foreman_omaha] = { assets: { precompile: assets_to_precompile } }
     end
 
     rake_tasks do

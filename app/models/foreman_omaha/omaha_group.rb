@@ -17,6 +17,14 @@ module ForemanOmaha
 
     before_validation :ensure_uuid
 
+    def operatingsystems
+      Coreos.where(:release_name => name.downcase)
+    end
+
+    def latest_operatingsystem
+      operatingsystems.order(:major, :minor).last
+    end
+
     private
 
     def ensure_uuid

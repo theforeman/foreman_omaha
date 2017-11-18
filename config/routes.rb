@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :omaha_groups, :only => [:index] do
+  resources :omaha_groups, :only => [:index, :show] do
     collection do
       get 'auto_complete_search'
     end

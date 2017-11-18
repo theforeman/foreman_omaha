@@ -8,4 +8,11 @@ class OmahaGroupsControllerTest < ActionController::TestCase
     assert_not_nil assigns('omaha_groups')
     assert_template 'index'
   end
+
+  test '#show' do
+    omaha_group = FactoryBot.create(:omaha_group)
+    get :show, params: { :id => omaha_group.id }, session: set_session_user
+    assert_response :success
+    assert_template 'show'
+  end
 end

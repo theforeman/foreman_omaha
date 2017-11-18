@@ -28,6 +28,7 @@ Style/HashSyntax:
   Enabled: false
 
 Metrics/ClassLength:
+  Max: 150
   Exclude:
     - 'test/**/*'
 
