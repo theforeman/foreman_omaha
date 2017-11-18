@@ -15,7 +15,7 @@
     </tr>
     <tr>
       <td><%= _('Group') %></td>
-      <td><%= @host.omaha_facet.omaha_group.try(:name) %></td>
+      <td><%= link_to_if_authorized(@host.omaha_facet.omaha_group.try(:name), hash_for_omaha_group_path(@host.omaha_facet.omaha_group)) %></td>
     </tr>
     <tr>
       <td><%= _('OEM') %></td>

@@ -28,8 +28,10 @@
                 <%= last_omaha_report_column(host) %>
               </div>
               <div class="list-view-pf-additional-info-item" style="white-space: nowrap;">
-                <%= icon_text('ticket', '', :kind => 'fa') %>
-                <%= host.omaha_facet.omaha_group.try(:name) %>
+                <% if host.omaha_facet.omaha_group %>
+                  <%= icon_text('ticket', '', :kind => 'fa') %>
+                  <%= link_to_if_authorized(host.omaha_facet.omaha_group, hash_for_omaha_group_path(host.omaha_facet.omaha_group)) %>
+                <% end %>
               </div>
             </div>
           </div>

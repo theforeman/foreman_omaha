@@ -6,7 +6,10 @@
   <div class="list-group list-view-pf list-view-pf-view" style="max-height: initial;">
     <% @omaha_groups.each do |group| %>
       <div class="list-group-item">
-        <div class="list-view-pf-main-info">
+        <div class="list-view-pf-main-info" style="padding: 0;">
+          <div class="list-view-pf-actions">
+            <%= link_to_if_authorized(_("View"), hash_for_omaha_group_path(group), :class => 'btn btn-default') %>
+          </div>
           <div class="list-view-pf-left">
             <%= icon_text('ticket', '', :kind => 'fa', :class => 'list-view-pf-icon-sm') %>
           </div>
@@ -18,7 +21,7 @@
             </div>
             <div class="list-view-pf-additional-info">
               <div class="list-view-pf-additional-info-item" style="white-space: nowrap;">
-                <%= icon_text('server', '', :kind => 'pficon') %>
+                <%= icon_text('screen', '', :kind => 'pficon') %>
                 <strong><%= link_to(facets_count(:omaha_facet).fetch(group.id, 0), hosts_path(:search => "omaha_group = #{group}")) %></strong>
                 <%= n_('Host', 'Hosts', facets_count(:omaha_facet).fetch(group.id, 0)) %>
               </div>

@@ -1,0 +1,181 @@
+<% javascript 'foreman_omaha/application' %>
+<% javascript 'charts' %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to_if_authorized(_("Omaha Groups"), hash_for_omaha_groups_path) %></li>
+        <li class="breadcrumb-item active"><strong><%= @omaha_group.name %></strong></li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="container-fluid container-cards-pf">
+  <!-- status cards -->
+  <div class="row row-cards-pf">
+    <div class="col-xs-12 col-md-6">
+      <div class="card-pf card-pf-accented card-pf-aggregate-status">
+        <h2 class="card-pf-title">
+          <%= icon_text('cube', '', :kind => 'fa') %>
+          <%= _('Latest Version') %>
+        </h2>
+        <div class="card-pf-body">
+          <p class="card-pf-aggregate-status-notifications">
+          <span class="card-pf-aggregate-status-notification">
+            <% if @latest_operatingsystem %>
+              <%= link_to_if_authorized(@latest_operatingsystem.release, hash_for_edit_operatingsystem_path(@latest_operatingsystem)) %>
+            <% else %>
+              <%= _('N/A') %>
+            <% end %>
+          </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <div class="card-pf card-pf-accented card-pf-aggregate-status">
+        <h2 class="card-pf-title">
+          <%= link_to(hosts_path(:search => "omaha_group = #{@omaha_group}")) do %>
+            <%= icon_text('screen', '', :kind => 'pficon') %>
+            <span class="card-pf-aggregate-status-count"><%= @omaha_group.hosts.count %></span>
+            <%= n_('Host', 'Hosts', @omaha_group.hosts.count) %>
+          <% end %>
+        </h2>
+        <div class="card-pf-body">
+          <p class="card-pf-aggregate-status-notifications">
+          <% @status_distribution.to_a.each do |status| %>
+            <span class="card-pf-aggregate-status-notification">
+              <%= link_to(hosts_path(:search => "omaha_group = #{@omaha_group} and omaha_status = #{status[:status]}"), :title => status[:label]) do %>
+                <span class="<%= iconclass_for_omaha_status(status[:status]) %>"></span>
+                <%= status[:count] %>
+              <% end %>
+            </span>
+          <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if @omaha_group.hosts.count > 0 %>
+  <!-- statistics cards -->
+  <div class="row row-cards-pf">
+    <div class="col-xs-12 col-md-12">
+      <div class="card-pf card-pf-accented card-pf-utilization">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title">
+            <%= _('Statistics') %>
+          </h2>
+        </div>
+        <div class="card-pf-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+              <h3 class="card-pf-subtitle"><%= _('Version Distribution') %></h3>
+              <%=
+                flot_pie_chart(
+                  'omaha_status_distribution_chart',
+                  _('Version Distribution'),
+                  @version_distribution.to_chart_data,
+                  :class => 'statistics-pie small',
+                  :search => "omaha_group = #{@omaha_group} and omaha_version = ~VAL~"
+                )
+              %>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+              <h3 class="card-pf-subtitle"><%= _('Host Upgrade Progress') %></h3>
+              <%=
+                flot_pie_chart(
+                  'omaha_status_distribution_chart',
+                  _('Version Distribution'),
+                  @status_distribution.to_chart_data,
+                  :class => 'statistics-pie small'
+                )
+              %>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+               <h3 class="card-pf-subtitle"><%= _('OEM Distribution') %></h3>
+               <%=
+                 flot_pie_chart(
+                   'omaha_oem_distribution_chart',
+                   _('OEM Distribution'),
+                   @oem_distribution.to_chart_data,
+                   :class => 'statistics-pie small',
+                   :search => "omaha_group = #{@omaha_group} and omaha_oem = ~VAL~"
+                 )
+               %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- out of sync hosts cards -->
+  <div class="row row-cards-pf">
+    <div class="col-xs-12 col-md-12">
+      <div class="card-pf card-pf-accented">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title">
+            <%= _('Out of Sync Hosts') %>
+          </h2>
+        </div>
+        <div class="card-pf-body">
+          <% if @out_of_sync.count > 0 %>
+            <table class="table table-striped table-condensed table-fixed">
+              <thead>
+                <tr>
+                  <th><%= _('Host') %></th>
+                  <th><%= _('Last check-in') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @out_of_sync.each do |facet| %>
+                  <tr>
+                    <td class="ellipsis"><%= link_to_if_authorized(facet.host.name, hash_for_host_path(id: facet.host)) %></td>
+                    <td><%= _('%s ago') % time_ago_in_words(facet.last_report) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <em><%= _('All Hosts have checked in within the last %s minutes.') % (30 + Setting[:outofsync_interval]) %></em>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% else %>
+  <!-- empty state -->
+  <div class="row row-cards-pf">
+    <div class="col-xs-12 col-md-12">
+      <div class="card-pf card-pf-accented">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title">
+            <%= _('Empty Group') %>
+          </h2>
+        </div>
+        <div class="card-pf-body">
+          <div class="blank-slate-pf">
+            <div class="blank-slate-pf-icon">
+              <span class="pficon pficon pficon-add-circle-o"></span>
+            </div>
+            <h1>
+              <%= _('No Hosts') %>
+            </h1>
+            <p>
+            <%= _('You do not seem to have any CoreOS Hosts in the %s group configured to send update requests to Foreman.') % @omaha_group.name %>
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<script>
+$(document).on('ContentLoad', function () {
+  refreshCharts();
+  // matchHeight the contents of each .card-pf and then the .card-pf itself
+  $(".row-cards-pf > [class*='col'] > .card-pf .card-pf-title").matchHeight();
+  $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-body").matchHeight();
+  $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-footer").matchHeight();
+  $(".row-cards-pf > [class*='col'] > .card-pf").matchHeight();
+});
+</script>

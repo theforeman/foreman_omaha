@@ -9,6 +9,8 @@ module ForemanOmaha
 
     belongs_to :omaha_group, :inverse_of => :omaha_facets, :class_name => 'ForemanOmaha::OmahaGroup'
 
+    scope :out_of_sync, ->(*args) { where(['last_report < ?', (args.first || (30 + Setting[:outofsync_interval]).minutes.ago)]) }
+
     validates_lengths_from_database
 
     validates :omaha_group, :presence => true, :allow_blank => false
