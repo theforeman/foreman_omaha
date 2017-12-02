@@ -17,7 +17,7 @@ module ForemanOmaha
       N_('Omaha Report')
     end
 
-    delegate :to_label, :to => :status_mapper
+    delegate :to_label, :to_description, :to => :status_mapper
 
     def operatingsystem
       return if omaha_version.blank?
