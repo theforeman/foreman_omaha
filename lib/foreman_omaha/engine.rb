@@ -41,7 +41,7 @@ module ForemanOmaha
 
           permission :view_omaha_groups, {
             :omaha_groups => [:index, :auto_complete_search],
-            :'api/v2/omaha_groups' => [:index]
+            :'api/v2/omaha_groups' => [:index, :show]
           }, :resource_type => 'ForemanOmaha::OmahaGroup'
         end
 
