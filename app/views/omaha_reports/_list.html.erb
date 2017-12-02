@@ -21,8 +21,8 @@
           <% end %>
         <% end %>
         <td><%= display_link_if_authorized(_("%s ago") % time_ago_in_words(report.reported_at), hash_for_omaha_report_path(:id => report.id)) %></td>
-        <td><%= report.operatingsystem.present? ? operatingsystem_link(report.operatingsystem) : _('unknown') %></td>
-        <td><span class="<%= iconclass_for_omaha_status(report.status) %>"></span> <%= report.to_label %></td>
+        <td><%= report.operatingsystem.present? ? operatingsystem_link(report.operatingsystem) : _('CoreOS %s') % report.omaha_version %></td>
+        <td title="<%= report.to_description(report.omaha_version) %>"><span class="<%= iconclass_for_omaha_status(report.status) %>"></span> <%= report.to_label %></td>
         <td>
           <%= action_buttons(display_delete_if_authorized hash_for_omaha_report_path(:id => report).merge(:auth_object => report, :authorizer => authorizer),
                                            :confirm => _("Delete report for %s?") % report.host.try(:name)) %>
