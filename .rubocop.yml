@@ -53,3 +53,6 @@ Metrics/LineLength:
 
 Style/FormatStringToken:
   Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
