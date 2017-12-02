@@ -9,19 +9,19 @@ module ForemanOmaha
     def to_label
       case status.to_sym
       when :complete
-        _('Complete')
+        N_('Complete')
       when :downloading
-        _('Downloading')
+        N_('Downloading')
       when :downloaded
-        _('Downloaded')
+        N_('Downloaded')
       when :installed
-        _('Installed')
+        N_('Installed')
       when :instance_hold
-        _('Instance Hold')
+        N_('Instance Hold')
       when :error
-        _('Error')
+        N_('Error')
       else
-        _('unknown')
+        N_('unknown')
       end
     end
   end

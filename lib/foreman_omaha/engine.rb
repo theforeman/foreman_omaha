@@ -84,7 +84,7 @@ module ForemanOmaha
                               :onlyif => proc { |host| host.omaha_facet }
         end
 
-        add_controller_action_scope(HostsController, :index) { |base_scope| base_scope.includes(:last_omaha_report_object) }
+        add_controller_action_scope(HostsController, :index) { |base_scope| base_scope.includes(:omaha_facet) }
       end
 
       # Extend built in permissions
