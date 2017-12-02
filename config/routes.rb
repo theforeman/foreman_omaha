@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         resources :omaha_reports, :only => [:index, :show, :destroy] do
           get :last, :on => :collection
         end
-        resources :omaha_groups, :only => [:index]
+        resources :omaha_groups, :only => [:index, :show]
       end
       resources :omaha_reports, :only => [:create]
     end
