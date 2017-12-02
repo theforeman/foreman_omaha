@@ -1,0 +1,13 @@
+.version-breakdown {
+  .progress {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .progress-bar {
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}

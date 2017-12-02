@@ -18,7 +18,7 @@ Rails/ActionFilter:
   EnforcedStyle: action
 
 Metrics/MethodLength:
-  Max: 25
+  Max: 50
 
 Style/Next:
   Enabled: false

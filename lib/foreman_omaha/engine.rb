@@ -114,10 +114,10 @@ module ForemanOmaha
       end
     end
 
-    # Precompile any JS or Image files under app/assets/
+    # Precompile any JS, Stylesheet or Image files under app/assets/
     assets_to_precompile =
       Dir.chdir(root) do
-        Dir['app/assets/javascripts/**/*', 'app/assets/images/**/*'].map do |f|
+        Dir['app/assets/javascripts/**/*', 'app/assets/images/**/*', 'app/assets/stylesheets/**/*'].map do |f|
           f.split(File::SEPARATOR, 4).last
         end
       end
