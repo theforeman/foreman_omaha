@@ -40,4 +40,16 @@ class HostTest < ActiveSupport::TestCase
       assert_includes hosts, @host
     end
   end
+
+  context 'host rebuild' do
+    let(:host) { FactoryBot.create(:host, :managed, :with_omaha_facet) }
+
+    test 'clears the omaha facet' do
+      assert host.omaha_facet
+      host.build = true
+      assert_valid host
+      assert host.save
+      refute host.reload.omaha_facet
+    end
+  end
 end
