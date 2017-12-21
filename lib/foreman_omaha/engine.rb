@@ -87,6 +87,10 @@ module ForemanOmaha
         end
 
         add_controller_action_scope(HostsController, :index) { |base_scope| base_scope.includes(:omaha_facet) }
+
+        # add renderer extensions
+        allowed_template_helpers :transpile_container_linux_config
+        extend_template_helpers ForemanOmaha::RendererMethods
       end
 
       # Extend built in permissions

@@ -22,6 +22,8 @@ To prepare the Foreman database, issue the following command:
 foreman-rake db:migrate SCOPE=foreman_omaha
 ```
 
+This plugins adds a global method `transpile_container_linux_config` to the template renderer that transpiles yaml to ignition. Make sure the binary [ct](https://github.com/coreos/container-linux-config-transpiler) is in your `PATH` when you want to use this feature.
+
 ## Uninstalling
 
 You need to revert all database changes made when installing this plug-in:
