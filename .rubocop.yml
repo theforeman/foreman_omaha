@@ -29,6 +29,7 @@ Style/HashSyntax:
 
 Metrics/ClassLength:
   Exclude:
+    - 'lib/foreman_omaha/engine.rb'
     - 'test/**/*'
 
 Performance/FixedSize:
@@ -37,6 +38,7 @@ Performance/FixedSize:
 
 Metrics/BlockLength:
   Exclude:
+    - 'lib/foreman_omaha/engine.rb'
     - 'test/**/*'
 
 Style/SymbolArray:
