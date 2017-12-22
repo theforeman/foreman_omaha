@@ -4,7 +4,7 @@ module ForemanOmaha
 
     included do
       has_one :omaha_facet, :class_name => '::ForemanOmaha::OmahaFacet', :foreign_key => :host_id, :inverse_of => :host, :dependent => :destroy
-      has_one :omaha_group, :through => :omaha_facet
+      has_one :omaha_group, :through => :omaha_facet, :inverse_of => :hosts
 
       accepts_nested_attributes_for :omaha_facet, :update_only => true, :reject_if => ->(attrs) { attrs.values.compact.empty? }
 

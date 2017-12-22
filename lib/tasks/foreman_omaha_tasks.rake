@@ -40,6 +40,4 @@ end
 Rake::Task[:test].enhance ['test:foreman_omaha']
 
 load 'tasks/jenkins.rake'
-if Rake::Task.task_defined?(:'jenkins:unit')
-  Rake::Task['jenkins:unit'].enhance ['test:foreman_omaha', 'foreman_omaha:rubocop']
-end
+Rake::Task['jenkins:unit'].enhance ['test:foreman_omaha', 'foreman_omaha:rubocop'] if Rake::Task.task_defined?(:'jenkins:unit')

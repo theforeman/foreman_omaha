@@ -58,9 +58,7 @@ module Api
       param :id, :identifier, :required => true
 
       def last
-        if params[:host_id].present?
-          conditions = { :host_id => resource_finder(Host.authorized(:view_hosts), params[:host_id]).try(:id) }
-        end
+        conditions = params[:host_id].present? ? { :host_id => resource_finder(Host.authorized(:view_hosts), params[:host_id]).try(:id) } : nil
         max_id = resource_scope.where(conditions).maximum(:id)
         @omaha_report = resource_scope.find(max_id)
         render :show

@@ -56,3 +56,6 @@ Style/ClassAndModuleChildren:
 
 Metrics/LineLength:
   Max: 180
+
+Style/FormatStringToken:
+  Enabled: false
