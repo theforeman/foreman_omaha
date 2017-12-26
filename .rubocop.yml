@@ -42,10 +42,6 @@ Metrics/BlockLength:
 Style/SymbolArray:
   Enabled: false
 
-# May be enabled for Foreman >= 1.16
-Rails/ApplicationRecord:
-  Enabled: false
-
 Lint/BooleanSymbol:
   Enabled: false
 
