@@ -2,18 +2,18 @@ require 'test_helper'
 
 class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
   test 'create valid' do
-    post :create, { :omaha_report => create_report }, set_session_user
+    post :create, params: { :omaha_report => create_report }, session: set_session_user
     assert_response :success
   end
 
   test 'create invalid' do
-    post :create, { :omaha_report => ['not a hash', 'throw an error'] }, set_session_user
+    post :create, params: { :omaha_report => ['not a hash', 'throw an error'] }, session: set_session_user
     assert_response :unprocessable_entity
   end
 
   test 'should get index' do
     FactoryBot.create(:omaha_report)
-    get :index, {}
+    get :index
     assert_response :success
     assert_not_nil assigns(:omaha_reports)
     reports = ActiveSupport::JSON.decode(@response.body)
@@ -22,7 +22,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
 
   test 'should show individual record' do
     report = FactoryBot.create(:omaha_report)
-    get :show, :id => report.to_param
+    get :show, params: { :id => report.to_param }
     assert_response :success
     show_response = ActiveSupport::JSON.decode(@response.body)
     assert !show_response.empty?
@@ -31,7 +31,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
   test 'should destroy report' do
     report = FactoryBot.create(:omaha_report)
     assert_difference('ForemanOmaha::OmahaReport.count', -1) do
-      delete :destroy, :id => report.to_param
+      delete :destroy, params: { :id => report.to_param }
     end
     assert_response :success
     refute Report.find_by(id: report.id)
@@ -39,7 +39,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
 
   test 'should get reports for given host only' do
     report = FactoryBot.create(:omaha_report)
-    get :index, :host_id => report.host.to_param
+    get :index, params: { :host_id => report.host.to_param }
     assert_response :success
     assert_not_nil assigns(:omaha_reports)
     reports = ActiveSupport::JSON.decode(@response.body)
@@ -49,7 +49,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
 
   test 'should return empty result for host with no reports' do
     host = FactoryBot.create(:host)
-    get :index, :host_id => host.to_param
+    get :index, params: { :host_id => host.to_param }
     assert_response :success
     assert_not_nil assigns(:omaha_reports)
     reports = ActiveSupport::JSON.decode(@response.body)
@@ -59,7 +59,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
 
   test 'should get last report' do
     reports = FactoryBot.create_list(:omaha_report, 5)
-    get :last, set_session_user
+    get :last, session: set_session_user
     assert_response :success
     assert_not_nil assigns(:omaha_report)
     report = ActiveSupport::JSON.decode(@response.body)
@@ -70,7 +70,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
   test 'should get last report for given host only' do
     main_report = FactoryBot.create(:omaha_report)
     FactoryBot.create_list(:omaha_report, 5)
-    get :last, { :host_id => main_report.host.to_param }, set_session_user
+    get :last, params: { :host_id => main_report.host.to_param }, session: set_session_user
     assert_response :success
     assert_not_nil assigns(:omaha_report)
     report = ActiveSupport::JSON.decode(@response.body)
@@ -80,14 +80,14 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
 
   test 'should give error if no last report for given host' do
     host = FactoryBot.create(:host)
-    get :last, :host_id => host.to_param
+    get :last, params: { :host_id => host.to_param }
     assert_response :not_found
   end
 
   test 'cannot view the last report without hosts view permission' do
     report = FactoryBot.create(:report)
     setup_user('view', 'omaha_reports')
-    get :last, { :host_id => report.host.id }, set_session_user.merge(:user => User.current.id)
+    get :last, params: { :host_id => report.host.id }, session: set_session_user.merge(:user => User.current.id)
     assert_response :not_found
   end
 
@@ -104,7 +104,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
       host = URI.parse(proxy.url).host
       Resolv.any_instance.stubs(:getnames).returns([host])
       as_user :one do
-        post :create, :omaha_report => create_report
+        post :create, params: { :omaha_report => create_report }
       end
       assert_equal proxy, @controller.detected_proxy
       assert_response :created

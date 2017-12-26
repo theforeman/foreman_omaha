@@ -3,6 +3,7 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.2
+  TargetRailsVersion: 5.1
   Exclude:
     - 'Rakefile'
 
@@ -37,9 +38,6 @@ Performance/FixedSize:
 Metrics/BlockLength:
   Exclude:
     - 'test/**/*'
-
-Rails/HttpPositionalArguments:
-  Enabled: false
 
 Style/SymbolArray:
   Enabled: false
