@@ -1,5 +1,5 @@
 module ForemanOmaha
-  class OmahaGroup < ActiveRecord::Base
+  class OmahaGroup < ApplicationRecord
     include Authorizable
 
     def self.humanize_class_name

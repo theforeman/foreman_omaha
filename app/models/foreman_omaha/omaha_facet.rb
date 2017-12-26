@@ -1,5 +1,5 @@
 module ForemanOmaha
-  class OmahaFacet < ActiveRecord::Base
+  class OmahaFacet < ApplicationRecord
     include Facets::Base
 
     VALID_OMAHA_STATUSES = [:unknown, :complete, :downloading, :downloaded,
