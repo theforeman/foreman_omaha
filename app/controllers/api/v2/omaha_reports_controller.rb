@@ -40,7 +40,7 @@ module Api
       param_group :omaha_report, :as => :create
 
       def create
-        @omaha_report = resource_class.import(params[:omaha_report], detected_proxy.try(:id))
+        @omaha_report = resource_class.import(params.to_unsafe_h[:omaha_report], detected_proxy.try(:id))
         process_response @omaha_report.errors.empty?
       rescue ::Foreman::Exception => e
         render_message(e.to_s, :status => :unprocessable_entity)
