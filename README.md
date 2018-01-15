@@ -8,7 +8,8 @@ Foreman core already supports deploying CoreOS hosts and is great for on-premise
 
 | Foreman Version | Plugin Version |
 | --------------- | -------------- |
-| >= 1.12         | any            |
+| >= 1.12         | ~> 0.0         |
+| >= 1.17         | ~> 1.0         |
 
 ## Installation
 
