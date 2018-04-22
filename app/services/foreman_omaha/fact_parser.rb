@@ -37,7 +37,7 @@ module ForemanOmaha
       os = previous_version.deep_clone(
         :include => [:ptables, :media, :os_default_templates, :architectures]
       )
-      os.update_attributes(attrs)
+      os.update(attrs)
       os
     end
 

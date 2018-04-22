@@ -1,4 +1,4 @@
-require File.expand_path('../lib/foreman_omaha/version', __FILE__)
+require File.expand_path('lib/foreman_omaha/version', __dir__)
 
 Gem::Specification.new do |s|
   s.name        = 'foreman_omaha'
@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-matchheight-rails'
 
   s.add_development_dependency 'rdoc'
-  s.add_development_dependency 'rubocop', '0.52.0'
+  s.add_development_dependency 'rubocop', '0.54.0'
 end
