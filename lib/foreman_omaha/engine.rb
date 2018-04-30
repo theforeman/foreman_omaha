@@ -114,20 +114,6 @@ module ForemanOmaha
       end
     end
 
-    # Precompile any JS, Stylesheet or Image files under app/assets/
-    assets_to_precompile =
-      Dir.chdir(root) do
-        Dir['app/assets/javascripts/**/*', 'app/assets/images/**/*', 'app/assets/stylesheets/**/*'].map do |f|
-          f.split(File::SEPARATOR, 4).last
-        end
-      end
-    initializer 'foreman_omaha.assets.precompile' do |app|
-      app.config.assets.precompile += assets_to_precompile
-    end
-    initializer 'foreman_omaha.configure_assets', group: :assets do
-      SETTINGS[:foreman_omaha] = { assets: { precompile: assets_to_precompile } }
-    end
-
     rake_tasks do
       Rake::Task['db:seed'].enhance do
         ForemanOmaha::Engine.load_seed
