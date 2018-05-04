@@ -1,15 +1,6 @@
 <% javascript 'foreman_omaha/application' %>
 <% javascript 'charts' %>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><%= link_to_if_authorized(_("Omaha Groups"), hash_for_omaha_groups_path) %></li>
-        <li class="breadcrumb-item active"><strong><%= @omaha_group.name %></strong></li>
-      </ol>
-    </div>
-  </div>
-</div>
+<% title @omaha_group.name %>
 <div class="container-fluid container-cards-pf">
   <!-- status cards -->
   <div class="row row-cards-pf">
