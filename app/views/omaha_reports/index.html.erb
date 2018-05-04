@@ -1,2 +1,18 @@
+<%= breadcrumbs(
+    items: [
+    {
+      caption: _('Hosts'),
+      url: (url_for(hosts_path) if authorized_for(hash_for_hosts_path))
+    },
+    {
+      caption: @host.name,
+      url: (host_path(@host) if authorized_for(hash_for_host_path(@host)))
+    },
+    {
+      caption: _('Omaha Reports'),
+      url: url_for(host_omaha_reports_path(@host))
+    },
+  ]
+) if @host %>
 <% title _("Omaha Reports") %>
 <%= render :partial => 'list' %>

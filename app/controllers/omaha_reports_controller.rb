@@ -8,6 +8,7 @@ class OmahaReportsController < ApplicationController
   end
 
   def index
+    @host = resource_finder(Host.authorized(:view_hosts), params[:host_id]) if params[:host_id]
     @omaha_reports = resource_base_search_and_page(:host)
   end
 
