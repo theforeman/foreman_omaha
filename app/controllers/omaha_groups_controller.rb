@@ -16,8 +16,6 @@ class OmahaGroupsController < ApplicationController
     @oem_distribution = ForemanOmaha::Charts::OemDistribution.new(@omaha_group.hosts)
   end
 
-  private
-
   def model_of_controller
     ::ForemanOmaha::OmahaGroup
   end
