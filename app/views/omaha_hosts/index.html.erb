@@ -20,7 +20,7 @@
               <% if host.operatingsystem %>
                 <div class="list-view-pf-additional-info-item">
                   <%= icon(host.operatingsystem, :size => '16x16') %>&nbsp;
-                  <%= link_to_if_authorized(host.operatingsystem.release, hash_for_edit_operatingsystem_path(host.operatingsystem)) %>
+                  <%= link_to_if_authorized(host.omaha_facet.version, hash_for_edit_operatingsystem_path(host.operatingsystem)) %>
                 </div>
               <% end %>
               <div class="list-view-pf-additional-info-item" style="white-space: nowrap;">
