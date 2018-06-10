@@ -4,7 +4,7 @@
     <%= icon_text('screen', '', :kind => 'pficon') %>
   </div>
   <h1><%= _('Omaha Hosts') %></h1>
-  <p><%= _("You don't have any visible hosts that have reported to Foreman. CoreOS Hosts can be added and provisioned from Foreman and configured to report to Foreman.") %></p>
+  <p><%= _("You don't have any visible hosts that have reported to Foreman. Container Linux Hosts can be added and provisioned from Foreman or just configured to report to Foreman.") %></p>
   <p><%= link_to _('Learn more about this in the documentation.'), 'https://github.com/theforeman/foreman_omaha', :rel => 'external' %></p>
   <div class="blank-slate-pf-main-action">
     <%= new_link(_('Create Host'), { :controller => :hosts, :action => :new }, { :class => 'btn-lg' }) %>
