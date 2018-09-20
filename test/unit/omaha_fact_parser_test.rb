@@ -51,14 +51,12 @@ class OmahaFactsParserTest < ActiveSupport::TestCase
     context 'with old versions' do
       setup do
         FactoryBot.create(:coreos,
-                          :with_associations,
-                          :with_os_defaults,
                           :major => '899',
                           :minor => '17.0',
                           :title => 'CoreOS 899.17.0')
         @previous = FactoryBot.create(:coreos,
                                       :with_associations,
-                                      :with_os_defaults,
+                                      :with_provision,
                                       :major => '1010',
                                       :minor => '5.0',
                                       :title => 'CoreOS 1010.5.0')
@@ -70,7 +68,9 @@ class OmahaFactsParserTest < ActiveSupport::TestCase
         assert_equal @previous.ptables, os.ptables
         assert_equal @previous.architectures, os.architectures
         assert_equal @previous.media, os.media
-        assert_equal @previous.os_default_templates, os.os_default_templates
+        assert_equal @previous.os_default_templates.map(&:provisioning_template), os.os_default_templates.map(&:provisioning_template)
+        assert_equal @previous.os_default_templates.map(&:template_kind), os.os_default_templates.map(&:template_kind)
+        assert_equal @previous.provisioning_templates, os.provisioning_templates
       end
     end
   end
