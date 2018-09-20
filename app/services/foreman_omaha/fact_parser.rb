@@ -35,7 +35,7 @@ module ForemanOmaha
       previous_version = previous_coreos_version
       return Coreos.create!(attrs) unless previous_coreos_version
       os = previous_version.deep_clone(
-        :include => [:ptables, :media, :os_default_templates, :architectures]
+        :include => [:ptables, :media, :os_default_templates, :architectures, :provisioning_templates]
       )
       os.update(attrs)
       os
