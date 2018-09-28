@@ -12,13 +12,7 @@ module ForemanOmaha
       end
 
       def to_chart_data
-        query.map do |status, count|
-          {
-            :label => status_label(status),
-            :data => count,
-            :color => status_color(status)
-          }
-        end
+        query.map { |status, count| [status_label(status), count, status_color(status)] }.to_json
       end
 
       def to_a

@@ -12,12 +12,7 @@ module ForemanOmaha
       end
 
       def to_chart_data
-        query.map do |oem, count|
-          {
-            :label => oem,
-            :data => count
-          }
-        end
+        query.map { |oem, count| [oem, count] }.to_json
       end
     end
   end
