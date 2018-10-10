@@ -17,7 +17,7 @@ module ForemanOmaha
         :installed => 4, :instance_hold => 5, :error => 6
       }
 
-      scoped_search :on => :name, :relation => :omaha_group, :complete_value => true, :rename => :omaha_group
+      scoped_search :on => :name, :relation => :omaha_group, :complete_value => true, :rename => :omaha_group, :only_explicit => true
     end
   end
 end
