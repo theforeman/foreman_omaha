@@ -1,6 +1,17 @@
 <% javascript 'foreman_omaha/application' %>
 <% javascript 'charts' %>
 <% title @omaha_group.name %>
+<%= breadcrumbs(
+    items: [
+    {
+      caption: _('Omaha Groups'),
+      url: (url_for(hash_for_omaha_groups_path) if authorized_for(hash_for_omaha_groups_path))
+    },
+    {
+      caption: @omaha_group.name
+    }
+  ]
+) %>
 <div class="container-fluid container-cards-pf">
   <!-- status cards -->
   <div class="row row-cards-pf">
