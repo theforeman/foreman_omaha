@@ -8,6 +8,7 @@ module ForemanOmaha
     config.autoload_paths += Dir["#{config.root}/app/helpers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/services"]
+    config.autoload_paths += Dir["#{config.root}/app/lib"]
 
     # Add any db migrations
     initializer 'foreman_omaha.load_app_instance_data' do |app|
@@ -18,7 +19,7 @@ module ForemanOmaha
 
     initializer 'foreman_omaha.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_omaha do
-        requires_foreman '>= 1.18'
+        requires_foreman '>= 1.20'
 
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
@@ -90,7 +91,6 @@ module ForemanOmaha
 
         # add renderer extensions
         allowed_template_helpers :transpile_container_linux_config
-        extend_template_helpers ForemanOmaha::RendererMethods
       end
 
       # Extend built in permissions
@@ -108,8 +108,8 @@ module ForemanOmaha
 
         Host::Managed.send(:include, ForemanOmaha::HostExtensions)
         Host::Managed.send(:include, ForemanOmaha::OmahaFacetHostExtensions)
-        UnattendedHelper.send(:include, ForemanOmaha::RendererMethods)
         HostsHelper.send(:include, ForemanOmaha::HostsHelperExtensions)
+        Foreman::Renderer::Scope::Base.send(:include, ForemanOmaha::Renderer::Scope::Macros::Omaha)
       rescue StandardError => e
         Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
       end
