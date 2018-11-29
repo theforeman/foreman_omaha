@@ -34,6 +34,7 @@ module ForemanOmaha
     def create_coreos_version(attrs)
       previous_version = previous_coreos_version
       return Coreos.create!(attrs) unless previous_coreos_version
+
       os = previous_version.deep_clone(
         :include => [:ptables, :media, :os_default_templates, :architectures, :provisioning_templates]
       )
@@ -42,7 +43,7 @@ module ForemanOmaha
     end
 
     def previous_coreos_version
-      Coreos.all.sort_by { |os| Gem::Version.new(os.release) }.last
+      Coreos.all.max_by { |os| Gem::Version.new(os.release) }
     end
   end
 end

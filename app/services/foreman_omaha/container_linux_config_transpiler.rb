@@ -15,6 +15,7 @@ module ForemanOmaha
       check_transpiler
       transpile
       raise TranspileError, "Could not transpile container linux config to ignition: #{errors}" unless status.success?
+
       output
     end
 

@@ -5,6 +5,7 @@ AllCops:
   TargetRubyVersion: 2.2
   TargetRailsVersion: 5.1
   Exclude:
+    - '*.spec'
     - 'Rakefile'
 
 Rails:

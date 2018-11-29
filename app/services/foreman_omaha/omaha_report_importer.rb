@@ -19,6 +19,7 @@ module ForemanOmaha
     def create_report_and_logs
       super
       return report unless report.persisted?
+
       report.omaha_version = omaha_version
       report.save
       update_omaha_facet!
@@ -31,6 +32,7 @@ module ForemanOmaha
 
     def update_omaha_facet!
       return unless omaha_facet.last_report.nil? || omaha_facet.last_report.utc < time
+
       omaha_facet.update(
         :last_report => time,
         :status => report_status,
@@ -71,6 +73,7 @@ module ForemanOmaha
       minor = version.segments.last(2).join('.')
       os = Coreos.find_by(:major => major, :minor => minor)
       return unless os
+
       ForemanOmaha::OmahaGroup.find_by(:uuid => os.release_name)
     end
   end

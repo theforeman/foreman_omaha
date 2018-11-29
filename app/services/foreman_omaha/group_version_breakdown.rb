@@ -24,6 +24,7 @@ module ForemanOmaha
 
     def percentage(count)
       return 0 if count.zero? || facets.count.zero?
+
       (count.to_f * 100 / facets.count).round(2)
     end
   end

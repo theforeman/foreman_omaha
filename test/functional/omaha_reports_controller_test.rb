@@ -49,6 +49,6 @@ class OmahaReportsControllerTest < ActionController::TestCase
     report = FactoryBot.create(:omaha_report)
     delete :destroy, params: { :id => report }, session: set_session_user
     assert_redirected_to omaha_reports_url
-    assert !ConfigReport.exists?(report.id)
+    assert_not ConfigReport.exists?(report.id)
   end
 end

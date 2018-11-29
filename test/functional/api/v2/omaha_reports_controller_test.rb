@@ -17,7 +17,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:omaha_reports)
     reports = ActiveSupport::JSON.decode(@response.body)
-    assert !reports['results'].empty?
+    assert_not reports['results'].empty?
   end
 
   test 'should show individual record' do
@@ -25,7 +25,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
     get :show, params: { :id => report.to_param }
     assert_response :success
     show_response = ActiveSupport::JSON.decode(@response.body)
-    assert !show_response.empty?
+    assert_not show_response.empty?
   end
 
   test 'should destroy report' do
@@ -34,7 +34,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
       delete :destroy, params: { :id => report.to_param }
     end
     assert_response :success
-    refute Report.find_by(id: report.id)
+    assert_not Report.find_by(id: report.id)
   end
 
   test 'should get reports for given host only' do
@@ -43,7 +43,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:omaha_reports)
     reports = ActiveSupport::JSON.decode(@response.body)
-    assert !reports['results'].empty?
+    assert_not reports['results'].empty?
     assert_equal 1, reports['results'].count
   end
 
@@ -63,7 +63,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:omaha_report)
     report = ActiveSupport::JSON.decode(@response.body)
-    assert !report.empty?
+    assert_not report.empty?
     assert_equal reports.last, ForemanOmaha::OmahaReport.find(report['id'])
   end
 
@@ -74,7 +74,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:omaha_report)
     report = ActiveSupport::JSON.decode(@response.body)
-    assert !report.empty?
+    assert_not report.empty?
     assert_equal main_report, ForemanOmaha::OmahaReport.find(report['id'])
   end
 

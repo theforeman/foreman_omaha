@@ -21,6 +21,7 @@ module ForemanOmaha
 
     def operatingsystem
       return if omaha_version.blank?
+
       args = { :type => 'Coreos', :major => osmajor, :minor => osminor }
       Operatingsystem.find_by(args)
     end
