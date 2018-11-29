@@ -11,6 +11,7 @@ Foreman core already supports deploying CoreOS hosts and is great for on-premise
 | >= 1.12         | ~> 0.0         |
 | >= 1.17         | ~> 1.0         |
 | >= 1.18         | ~> 2.0         |
+| >= 1.20         | ~> 3.0         |
 
 ## Installation
 
