@@ -6,11 +6,13 @@ module HostStatus
 
     def to_status(_options = {})
       return ::ForemanOmaha::OmahaFacet.statuses[:unknown] unless relevant?
+
       ::ForemanOmaha::OmahaFacet.statuses[host.omaha_facet.status]
     end
 
     def to_global(_options = {})
       return ::ForemanOmaha::OmahaFacet.statuses[:unknown] unless relevant?
+
       case host.omaha_facet.status.to_sym
       when :complete, :downloaded, :downloading, :installed
         HostStatus::Global::OK

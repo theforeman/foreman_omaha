@@ -23,11 +23,13 @@ module ForemanOmaha
 
     def major
       return unless version
+
       version.split('.').first
     end
 
     def minor
       return unless version
+
       version.split('.').last(2).join('.')
     end
 

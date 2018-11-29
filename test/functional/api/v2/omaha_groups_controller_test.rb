@@ -23,7 +23,7 @@ class Api::V2::OmahaGroupsControllerTest < ActionController::TestCase
       get :show, params: { :id => omaha_group.to_param }
       assert_response :success
       body = ActiveSupport::JSON.decode(@response.body)
-      refute_empty body
+      assert_not_empty body
       assert_equal omaha_group.id, body['id']
       assert_equal omaha_group.name, body['name']
       assert_equal omaha_group.uuid, body['uuid']

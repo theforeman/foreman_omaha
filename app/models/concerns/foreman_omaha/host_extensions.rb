@@ -19,6 +19,7 @@ module ForemanOmaha
 
     def clear_omaha_facet_on_build
       return unless respond_to?(:old) && old && build? && !old.build?
+
       clear_omaha_facet
     end
   end

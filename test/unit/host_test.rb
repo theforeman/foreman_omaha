@@ -49,7 +49,7 @@ class HostTest < ActiveSupport::TestCase
       host.build = true
       assert_valid host
       assert host.save
-      refute host.reload.omaha_facet
+      assert_not host.reload.omaha_facet
     end
   end
 end
