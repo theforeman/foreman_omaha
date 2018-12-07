@@ -9,11 +9,11 @@ class OmahaGroupsController < ApplicationController
   end
 
   def show
-    @out_of_sync = ForemanOmaha::OmahaFacet.where(:omaha_group => @omaha_group).out_of_sync.includes(:host)
+    @out_of_sync = ForemanOmaha::OmahaFacet.where(omaha_group: @omaha_group).out_of_sync.includes(:host)
     @latest_operatingsystem = @omaha_group.latest_operatingsystem
-    @status_distribution = ForemanOmaha::Charts::StatusDistribution.new(@omaha_group.hosts)
-    @version_distribution = ForemanOmaha::Charts::VersionDistribution.new(@omaha_group.hosts)
-    @oem_distribution = ForemanOmaha::Charts::OemDistribution.new(@omaha_group.hosts)
+    @status_distribution = ForemanOmaha::Charts::StatusDistribution.new(@omaha_group)
+    @version_distribution = ForemanOmaha::Charts::VersionDistribution.new(@omaha_group)
+    @oem_distribution = ForemanOmaha::Charts::OemDistribution.new(@omaha_group)
   end
 
   def model_of_controller

@@ -1,5 +1,6 @@
 <% javascript 'foreman_omaha/application' %>
 <% javascript 'charts' %>
+<%= webpacked_plugins_js_for :foreman_omaha %>
 <% title @omaha_group.name %>
 <%= breadcrumbs(
     items: [
@@ -73,17 +74,17 @@
             <div class="col-xs-12 col-sm-4 col-md-4">
               <h3 class="card-pf-subtitle"><%= _('Version Distribution') %></h3>
               <div id="omaha_version_distribution_chart"></div>
-              <%= mount_react_component('DonutChart', '#omaha_version_distribution_chart', @version_distribution.to_chart_data) %>
+              <%= mount_react_component('OmahaDonutChart', '#omaha_version_distribution_chart', @version_distribution.to_chart_data) %>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
               <h3 class="card-pf-subtitle"><%= _('Host Upgrade Progress') %></h3>
               <div id="omaha_host_upgrade_progress_chart"></div>
-              <%= mount_react_component('DonutChart', '#omaha_host_upgrade_progress_chart', @status_distribution.to_chart_data) %>
+              <%= mount_react_component('OmahaDonutChart', '#omaha_host_upgrade_progress_chart', @status_distribution.to_chart_data) %>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
                <h3 class="card-pf-subtitle"><%= _('OEM Distribution') %></h3>
                <div id="omaha_oem_distribution_chart"></div>
-               <%= mount_react_component('DonutChart', '#omaha_oem_distribution_chart', @oem_distribution.to_chart_data) %>
+               <%= mount_react_component('OmahaDonutChart', '#omaha_oem_distribution_chart', @oem_distribution.to_chart_data) %>
             </div>
           </div>
         </div>
