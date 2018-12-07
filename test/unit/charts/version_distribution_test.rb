@@ -17,8 +17,8 @@ module ForemanOmaha
         end
 
         test 'calculates the version distribution' do
-          expected = [['1068.9.0', 5], ['1465.7.0', 7]]
-          actual = JSON.parse(version_distribition_chart.to_chart_data)['columns']
+          expected = [['1068.9.0', 5], ['1465.7.0', 7]].sort_by(&:first)
+          actual = JSON.parse(version_distribition_chart.to_chart_data)['columns'].sort_by(&:first)
 
           assert_equal expected, actual
         end

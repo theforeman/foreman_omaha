@@ -17,8 +17,8 @@ module ForemanOmaha
         end
 
         test 'calculates the status distribution' do
-          expected = [['Complete', 5, '#89A54E'], ['Downloading', 3, '#3D96AE']]
-          actual = JSON.parse(status_distribition_chart.to_chart_data)['columns']
+          expected = [['Complete', 5, '#89A54E'], ['Downloading', 3, '#3D96AE']].sort_by(&:first)
+          actual = JSON.parse(status_distribition_chart.to_chart_data)['columns'].sort_by(&:first)
 
           assert_equal expected, actual
         end

@@ -16,8 +16,8 @@ module ForemanOmaha
         end
 
         test 'calculates the oem distribution' do
-          expected = [['rackspace', 5]]
-          actual = JSON.parse(oem_distribition_chart.to_chart_data)['columns']
+          expected = [['rackspace', 5]].sort_by(&:first)
+          actual = JSON.parse(oem_distribition_chart.to_chart_data)['columns'].sort_by(&:first)
 
           assert_equal expected, actual
         end
