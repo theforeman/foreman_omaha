@@ -20,3 +20,17 @@ module Minitest
     end
   end
 end
+
+module ForemanOmaha
+  class Plugin
+    module AssetsExtensions
+      def uses_webpack?
+        return if path.nil?
+
+        super
+      end
+    end
+  end
+end
+
+Foreman::Plugin.prepend(ForemanOmaha::Plugin::AssetsExtensions)
