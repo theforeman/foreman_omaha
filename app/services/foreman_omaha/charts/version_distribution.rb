@@ -1,22 +1,7 @@
 module ForemanOmaha
   module Charts
-    class VersionDistribution
-      def initialize(omaha_group)
-        @omaha_group = omaha_group
-      end
-
-      def to_chart_data
-        {
-          search: search,
-          columns: columns
-        }.to_json
-      end
-
+    class VersionDistribution < Base
       private
-
-      attr_accessor :omaha_group
-      delegate :hosts, to: :omaha_group
-      delegate :hosts_path, to: 'Rails.application.routes.url_helpers'
 
       def query
         @query ||= hosts.group(:version).count

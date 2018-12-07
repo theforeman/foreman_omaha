@@ -1,6 +1,6 @@
 module ForemanOmaha
   module Charts
-    class StatusDistribution
+    class StatusDistribution < Base
       COLOR_MAP = {
         unknown: '#92A8CD',
         complete: '#89A54E',
@@ -10,16 +10,6 @@ module ForemanOmaha
         instance_hold: '#80699B',
         error: '#AA4643'
       }.freeze
-
-      def initialize(omaha_group)
-        @omaha_group = omaha_group
-      end
-
-      def to_chart_data
-        {
-          columns: columns
-        }.to_json
-      end
 
       def to_a
         query.map do |status, count|
@@ -33,9 +23,7 @@ module ForemanOmaha
 
       private
 
-      attr_accessor :omaha_group
-      delegate :hosts, to: :omaha_group
-      delegate :hosts_path, to: 'Rails.application.routes.url_helpers'
+      attr_reader :search
 
       def query
         @query ||= hosts.group(:status).count.transform_keys { |k| ForemanOmaha::OmahaFacet.statuses.key(k).to_sym }

@@ -7,20 +7,20 @@ module ForemanOmaha
         User.current = FactoryBot.create(:user, :admin)
       end
 
-      let(:version_distribition_chart) { ForemanOmaha::Charts::VersionDistribution.new }
+      let(:omaha_group) { FactoryBot.create(:omaha_group) }
+      let(:version_distribition_chart) { ForemanOmaha::Charts::VersionDistribution.new(omaha_group) }
 
       context 'with hosts' do
         setup do
-          FactoryBot.create_list(:host, 5, :with_omaha_facet)
-          FactoryBot.create_list(:host, 7, :with_omaha_facet, :omaha_version => '1465.7.0')
+          FactoryBot.create_list(:host, 5, :with_omaha_facet, omaha_group: omaha_group)
+          FactoryBot.create_list(:host, 7, :with_omaha_facet, omaha_version: '1465.7.0', omaha_group: omaha_group)
         end
 
         test 'calculates the version distribution' do
-          expected = [
-            { :label => '1068.9.0', :data => 5 },
-            { :label => '1465.7.0', :data => 7 }
-          ]
-          assert_equal(expected, version_distribition_chart.to_chart_data.sort_by { |e| e[:label] })
+          expected = [['1068.9.0', 5], ['1465.7.0', 7]]
+          actual = JSON.parse(version_distribition_chart.to_chart_data)['columns']
+
+          assert_equal expected, actual
         end
       end
     end

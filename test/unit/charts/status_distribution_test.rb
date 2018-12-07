@@ -7,20 +7,20 @@ module ForemanOmaha
         User.current = FactoryBot.create(:user, :admin)
       end
 
-      let(:status_distribition_chart) { ForemanOmaha::Charts::StatusDistribution.new }
+      let(:omaha_group) { FactoryBot.create(:omaha_group) }
+      let(:status_distribition_chart) { ForemanOmaha::Charts::StatusDistribution.new(omaha_group) }
 
       context 'with hosts' do
         setup do
-          FactoryBot.create_list(:host, 5, :with_omaha_facet)
-          FactoryBot.create_list(:host, 3, :with_omaha_facet, :omaha_status => 2)
+          FactoryBot.create_list(:host, 5, :with_omaha_facet, omaha_group: omaha_group)
+          FactoryBot.create_list(:host, 3, :with_omaha_facet, omaha_status: 2, omaha_group: omaha_group)
         end
 
         test 'calculates the status distribution' do
-          expected = [
-            { :label => 'Complete', :data => 5, :color => '#89A54E' },
-            { :label => 'Downloading', :data => 3, :color => '#3D96AE' }
-          ]
-          assert_equal(expected, status_distribition_chart.to_chart_data.sort_by { |e| e[:label] })
+          expected = [['Complete', 5, '#89A54E'], ['Downloading', 3, '#3D96AE']]
+          actual = JSON.parse(status_distribition_chart.to_chart_data)['columns']
+
+          assert_equal expected, actual
         end
       end
     end
