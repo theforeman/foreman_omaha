@@ -6,7 +6,7 @@ const OmahaDonutChart = ({
   data
 }) => {
   const { columns, search } = data;
-  return <DonutChart data={columns} onclick={(e) => {
+  return <DonutChart data={columns} config='small' onclick={(e) => {
     if(search && search[e.id]) {
       window.location.href = search[e.id]
     }

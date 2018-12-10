@@ -71,17 +71,17 @@
         </div>
         <div class="card-pf-body">
           <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="col-xs-12 col-md-4">
               <h3 class="card-pf-subtitle"><%= _('Version Distribution') %></h3>
               <div id="omaha_version_distribution_chart"></div>
               <%= mount_react_component('OmahaDonutChart', '#omaha_version_distribution_chart', @version_distribution.to_chart_data) %>
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="col-xs-12 col-md-4">
               <h3 class="card-pf-subtitle"><%= _('Host Upgrade Progress') %></h3>
               <div id="omaha_host_upgrade_progress_chart"></div>
               <%= mount_react_component('OmahaDonutChart', '#omaha_host_upgrade_progress_chart', @status_distribution.to_chart_data) %>
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="col-xs-12 col-md-4">
                <h3 class="card-pf-subtitle"><%= _('OEM Distribution') %></h3>
                <div id="omaha_oem_distribution_chart"></div>
                <%= mount_react_component('OmahaDonutChart', '#omaha_oem_distribution_chart', @oem_distribution.to_chart_data) %>
