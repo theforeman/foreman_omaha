@@ -13,7 +13,7 @@ module ForemanOmaha
 
       def search
         query.map do |oem, _count|
-          [oem, hosts_path(search: "omaha_group = #{omaha_group} and omaha_oem = #{oem}")]
+          [oem, hosts_path(search: "omaha_group = \"#{omaha_group}\" and omaha_oem = \"#{oem}\"")]
         end.to_h
       end
     end
