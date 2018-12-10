@@ -25,7 +25,7 @@ module ForemanOmaha
         test 'returns search paths' do
           omaha_group_name = omaha_group.name.tr(' ', '+')
           expected = {
-            'rackspace' => "/hosts?search=omaha_group+%3D+#{omaha_group_name}+and+omaha_oem+%3D+rackspace"
+            'rackspace' => "/hosts?search=omaha_group+%3D+%22#{omaha_group_name}%22+and+omaha_oem+%3D+%22rackspace%22"
           }.sort
           actual = JSON.parse(oem_distribition_chart.to_chart_data)['search'].sort
 

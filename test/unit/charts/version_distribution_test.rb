@@ -26,8 +26,8 @@ module ForemanOmaha
         test 'returns search paths' do
           omaha_group_name = omaha_group.name.tr(' ', '+')
           expected = {
-            '1068.9.0' => "/hosts?search=omaha_group+%3D+#{omaha_group_name}+and+omaha_version+%3D+1068.9.0",
-            '1465.7.0' => "/hosts?search=omaha_group+%3D+#{omaha_group_name}+and+omaha_version+%3D+1465.7.0"
+            '1068.9.0' => "/hosts?search=omaha_group+%3D+%22#{omaha_group_name}%22+and+omaha_version+%3D+%221068.9.0%22",
+            '1465.7.0' => "/hosts?search=omaha_group+%3D+%22#{omaha_group_name}%22+and+omaha_version+%3D+%221465.7.0%22"
           }.sort
           actual = JSON.parse(version_distribition_chart.to_chart_data)['search'].sort
 
