@@ -22,6 +22,17 @@ module ForemanOmaha
 
           assert_equal expected, actual
         end
+
+        test 'returns search paths' do
+          omaha_group_name = omaha_group.name.tr(' ', '+')
+          expected = {
+            '1068.9.0' => "/hosts?search=omaha_group+%3D+#{omaha_group_name}+and+omaha_version+%3D+1068.9.0",
+            '1465.7.0' => "/hosts?search=omaha_group+%3D+#{omaha_group_name}+and+omaha_version+%3D+1465.7.0"
+          }.sort
+          actual = JSON.parse(version_distribition_chart.to_chart_data)['search'].sort
+
+          assert_equal expected, actual
+        end
       end
     end
   end
