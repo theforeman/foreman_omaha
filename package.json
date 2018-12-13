@@ -7,9 +7,12 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.4.0",
+    "prop-types": "^15.6.0"
+  },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
+    "babel-eslint": "^8.2.3",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-plugin-lodash": "^3.3.2",
@@ -17,11 +20,8 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "eslint": "^4.18.1",
-    "eslint-config-airbnb": "^16.0.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.2.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-patternfly-react": "0.2.0",
+    "prettier": "^1.13.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
