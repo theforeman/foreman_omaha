@@ -8,8 +8,9 @@
     "test": "test"
   },
   "dependencies": {
-    "react": "^16.4.0",
-    "prop-types": "^15.6.0"
+    "lodash": "^4.17.11",
+    "prop-types": "^15.6.0",
+    "react": "^16.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

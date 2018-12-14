@@ -1,14 +1,16 @@
 module ForemanOmaha
   module Charts
     class StatusDistribution < Base
+      # use colors from pf color palette
+      # https://www.patternfly.org/styles/color-palette/
       COLOR_MAP = {
-        unknown: '#92A8CD',
-        complete: '#89A54E',
-        downloading: '#3D96AE',
-        downloaded: '#4572A7',
-        installed: '#DB843D',
-        instance_hold: '#80699B',
-        error: '#AA4643'
+        unknown: 'blue-200',
+        complete: 'green',
+        downloading: 'cyan',
+        downloaded: 'blue',
+        installed: 'orange',
+        instance_hold: 'purple-300',
+        error: 'red'
       }.freeze
 
       def to_a
