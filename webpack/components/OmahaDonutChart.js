@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { map, get } from 'lodash';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies, import/no-unresolved, import/extensions
 import DonutChart from 'foremanReact/components/common/charts/DonutChart';
 
-
-
 const OmahaDonutChart = ({ data: { columns, search } }) => {
-  map(columns, (c) => {
-    if(c[2]) {
-      c[2] = get($.pfPaletteColors, c[2], $.pfPaletteColors.blue)
+  map(columns, c => {
+    if (c[2]) {
+      c[2] = get($.pfPaletteColors, c[2], $.pfPaletteColors.blue);
     }
     return c;
-  })
+  });
 
   return (
     <DonutChart
@@ -25,7 +23,7 @@ const OmahaDonutChart = ({ data: { columns, search } }) => {
       }}
     />
   );
-}
+};
 
 OmahaDonutChart.propTypes = {
   data: PropTypes.object.isRequired,
