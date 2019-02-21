@@ -19,7 +19,7 @@ module ForemanOmaha
 
     initializer 'foreman_omaha.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_omaha do
-        requires_foreman '>= 1.20'
+        requires_foreman '>= 1.21'
 
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
@@ -87,7 +87,7 @@ module ForemanOmaha
                               :onlyif => proc { |host| host.omaha_facet }
         end
 
-        add_controller_action_scope(HostsController, :index) { |base_scope| base_scope.includes(:omaha_facet) }
+        add_controller_action_scope('HostsController', :index) { |base_scope| base_scope.includes(:omaha_facet) }
 
         # add renderer extensions
         allowed_template_helpers :transpile_container_linux_config
