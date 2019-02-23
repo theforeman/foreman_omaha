@@ -11,6 +11,7 @@ module ForemanOmaha
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/services"]
     config.autoload_paths += Dir["#{config.root}/app/lib"]
+    config.autoload_paths += Dir["#{config.root}/app/graphql"]
 
     # Add any db migrations
     initializer 'foreman_omaha.load_app_instance_data' do |app|
@@ -95,6 +96,17 @@ module ForemanOmaha
 
         # add renderer extensions
         allowed_template_helpers :transpile_container_linux_config
+
+        # graphql extensions
+        extend_graphql_type type: Types::Host do
+          has_many :omaha_reports, Types::OmahaReport
+        end
+
+        register_graphql_query_field :omaha_group, '::Types::OmahaGroup', :record_field
+        register_graphql_query_field :omaha_groups, '::Types::OmahaGroup', :collection_field
+
+        register_graphql_query_field :omaha_report, '::Types::OmahaReport', :record_field
+        register_graphql_query_field :omaha_reports, '::Types::OmahaReport', :collection_field
       end
 
       # Extend built in permissions
