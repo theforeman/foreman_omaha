@@ -4,6 +4,8 @@ module ForemanOmaha
   class OmahaReport < ::Report
     enum :status => OmahaFacet::VALID_OMAHA_STATUSES
 
+    graphql_type '::Types::OmahaReport'
+
     scoped_search :on => :omaha_version, :rename => :version, :complete_value => true
     scoped_search :on => :status, :complete_value => statuses
 

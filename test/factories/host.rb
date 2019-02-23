@@ -19,5 +19,18 @@ FactoryBot.modify do
         host.omaha_facet.omaha_group = evaluator.omaha_group if evaluator.omaha_group.present?
       end
     end
+
+    trait :with_omaha_reports do
+      with_omaha_facet
+      transient do
+        omaha_report_count { 5 }
+      end
+      after(:create) do |host, evaluator|
+        evaluator.omaha_report_count.times do |i|
+          FactoryBot.create(:omaha_report, host: host, reported_at: (evaluator.omaha_report_count - i).minutes.ago)
+        end
+        host.omaha_facet.update_attribute(:last_report, host.omaha_reports.last.reported_at) # rubocop:disable Rails/SkipsModelValidations
+      end
+    end
   end
 end
