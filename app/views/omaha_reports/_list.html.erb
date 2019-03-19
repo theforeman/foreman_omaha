@@ -25,7 +25,7 @@
         <td title="<%= report.to_description(report.omaha_version) %>"><span class="<%= iconclass_for_omaha_status(report.status) %>"></span> <%= report.to_label %></td>
         <td>
           <%= action_buttons(display_delete_if_authorized hash_for_omaha_report_path(:id => report).merge(:auth_object => report, :authorizer => authorizer),
-                                           :confirm => _("Delete report for %s?") % report.host.try(:name)) %>
+                             :data => { :confirm => _("Delete report for %s?") % report.host.try(:name)}) %>
         </td>
       </tr>
     <% end %>
