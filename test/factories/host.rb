@@ -4,10 +4,10 @@ FactoryBot.modify do
       association :omaha_facet, :factory => :omaha_facet, :strategy => :build
 
       transient do
-        omaha_status 1
-        omaha_version '1068.9.0'
-        omaha_oem 'rackspace'
-        omaha_group nil
+        omaha_status { 1 }
+        omaha_version { '1068.9.0' }
+        omaha_oem { 'rackspace' }
+        omaha_group { nil }
       end
 
       after(:build) do |host, evaluator|
