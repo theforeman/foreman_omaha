@@ -1,7 +1,7 @@
 FactoryBot.modify do
   factory :feature do
     trait :omaha do
-      name 'Omaha'
+      name { 'Omaha' }
     end
   end
 end
