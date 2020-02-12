@@ -49,9 +49,11 @@ module ForemanOmaha
         end
 
         role 'Omaha reports viewer',
-             [:view_omaha_reports]
+             [:view_omaha_reports],
+             'TODO: Description'
         role 'Omaha reports manager',
-             [:view_omaha_reports, :destroy_omaha_reports, :upload_omaha_reports]
+             [:view_omaha_reports, :destroy_omaha_reports, :upload_omaha_reports],
+             'TODO: Description'
 
         # add menu entry
         menu :top_menu, :omaha_reports,
