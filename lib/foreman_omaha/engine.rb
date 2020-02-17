@@ -50,10 +50,10 @@ module ForemanOmaha
 
         role 'Omaha reports viewer',
              [:view_omaha_reports],
-             'TODO: Description'
+             'This role can view Omaha reports.'
         role 'Omaha reports manager',
              [:view_omaha_reports, :destroy_omaha_reports, :upload_omaha_reports],
-             'TODO: Description'
+             'This role can manage Omaha reports.'
 
         # add menu entry
         menu :top_menu, :omaha_reports,
