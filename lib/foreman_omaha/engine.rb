@@ -53,7 +53,7 @@ module ForemanOmaha
              'This role can view Omaha reports.'
         role 'Omaha reports manager',
              [:view_omaha_reports, :destroy_omaha_reports, :upload_omaha_reports],
-             'This role can manage Omaha reports.'
+             'Role granting permissions to manage Omaha reports.'
 
         # add menu entry
         menu :top_menu, :omaha_reports,
