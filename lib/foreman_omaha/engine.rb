@@ -50,7 +50,7 @@ module ForemanOmaha
 
         role 'Omaha reports viewer',
              [:view_omaha_reports],
-             'This role can view Omaha reports.'
+             'Role granting permissions to view Omaha reports.'
         role 'Omaha reports manager',
              [:view_omaha_reports, :destroy_omaha_reports, :upload_omaha_reports],
              'Role granting permissions to manage Omaha reports.'
