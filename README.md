@@ -1,6 +1,6 @@
 # ForemanOmaha
 
-This plug-in enables CoreOS updates using [The Foreman](https://theforeman.org/) without using the public update infrastructure.
+This plug-in enables CoreOS and Flatcar updates using [The Foreman](https://theforeman.org/) without using the public update infrastructure.
 To follow along with common Foreman architecture, you need this Foreman plug-in installed and a [Smart-Proxy plugin](https://github.com/theforeman/smart_proxy_omaha). The smart-proxy plug-in does all the heavy lifting. The Foreman plug-in shows facts and reports for your hosts.
 Foreman core already supports deploying CoreOS hosts and is great for on-premise setups. This plug-in enables you to better manage your servers.
 
