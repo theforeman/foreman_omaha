@@ -21,7 +21,8 @@ class OmahaFactsParserTest < ActiveSupport::TestCase
       'osminor' => '9.0',
       'ipaddress' => '127.0.0.1',
       'ipaddress6' => '',
-      'hostname' => 'client.example.com'
+      'hostname' => 'client.example.com',
+      'distribution' => 'coreos'
     }
   end
   let(:importer) { ::ForemanOmaha::FactParser.new(facts) }
@@ -38,16 +39,47 @@ class OmahaFactsParserTest < ActiveSupport::TestCase
   context '#operatingsystem' do
     let(:os) { importer.operatingsystem }
 
-    test 'should return an OS with correct params' do
-      assert_kind_of Operatingsystem, os
-      assert_equal '1068', os.major
-      assert_equal '9.0', os.minor
-      assert_equal 'CoreOS', os.name
-      assert_equal 'CoreOS 1068.9.0', os.description
-      assert_equal 'stable', os.release_name
-      assert_empty os.ptables
-      assert_empty os.media
-      assert_empty os.os_default_templates
+    context 'without distribution fact' do
+      setup do
+        facts.delete('distribution')
+      end
+
+      test 'should return an OS with correct params' do
+        assert_equal 'CoreOS', os.name
+        assert_equal 'CoreOS 1068.9.0', os.description
+      end
+    end
+
+    context 'CoreOS' do
+      test 'should return an OS with correct params' do
+        assert_kind_of Operatingsystem, os
+        assert_equal '1068', os.major
+        assert_equal '9.0', os.minor
+        assert_equal 'CoreOS', os.name
+        assert_equal 'CoreOS 1068.9.0', os.description
+        assert_equal 'stable', os.release_name
+        assert_empty os.ptables
+        assert_empty os.media
+        assert_empty os.os_default_templates
+      end
+    end
+
+    context 'Flatcar' do
+      setup do
+        facts['distribution'] = 'flatcar'
+      end
+
+      test 'should return an OS with correct params' do
+        assert_kind_of Operatingsystem, os
+        assert_equal '1068', os.major
+        assert_equal '9.0', os.minor
+        assert_equal 'Flatcar', os.name
+        assert_equal 'Flatcar 1068.9.0', os.description
+        assert_equal 'stable', os.release_name
+        assert_empty os.ptables
+        assert_empty os.media
+        assert_empty os.os_default_templates
+      end
     end
 
     context 'with old versions' do
