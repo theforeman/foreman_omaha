@@ -3,8 +3,8 @@
 module ForemanOmaha
   class FactParser < ::FactParser
     def operatingsystem
-      args = { :name => facts['platform'], :major => facts['osmajor'], :minor => facts['osminor'] }
-      description = "#{facts['platform']} #{facts['version']}"
+      args = { :name => os_name, :major => facts['osmajor'], :minor => facts['osminor'] }
+      description = "#{os_name} #{facts['version']}"
       Coreos.where(args).first ||
         create_coreos_version(args.merge(:description => description,
                                          :release_name => facts['track']))
@@ -33,6 +33,11 @@ module ForemanOmaha
 
     private
 
+    def os_name
+      return 'Flatcar' if facts['distribution']&.downcase == 'flatcar'
+      facts['platform']
+    end
+
     def create_coreos_version(attrs)
       previous_version = previous_coreos_version
       return Coreos.create!(attrs) unless previous_coreos_version
@@ -45,7 +50,7 @@ module ForemanOmaha
     end
 
     def previous_coreos_version
-      Coreos.all.max_by { |os| Gem::Version.new(os.release) }
+      Coreos.where(name: os_name).max_by { |os| Gem::Version.new(os.release) }
     end
   end
 end
