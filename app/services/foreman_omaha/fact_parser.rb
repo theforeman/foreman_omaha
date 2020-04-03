@@ -35,6 +35,7 @@ module ForemanOmaha
 
     def os_name
       return 'Flatcar' if facts['distribution']&.downcase == 'flatcar'
+
       facts['platform']
     end
 
