@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   module OmahaFacetHostExtensions
     extend ActiveSupport::Concern

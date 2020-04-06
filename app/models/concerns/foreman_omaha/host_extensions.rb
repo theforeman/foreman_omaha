@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   module HostExtensions
     extend ActiveSupport::Concern
@@ -14,7 +16,7 @@ module ForemanOmaha
     end
 
     def clear_omaha_facet
-      omaha_facet.destroy if omaha_facet
+      omaha_facet&.destroy
     end
 
     def clear_omaha_facet_on_build

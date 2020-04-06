@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_plugin_helper'
 
 class OmahaStatusTest < ActiveSupport::TestCase
@@ -10,10 +12,10 @@ class OmahaStatusTest < ActiveSupport::TestCase
   end
 
   test '#relevant? is only for hosts with an omaha facet' do
-    assert_equal true, status.relevant?
+    assert status.relevant?
 
     status.host = FactoryBot.build_stubbed(:host)
 
-    assert_equal false, status.relevant?
+    assert_not status.relevant?
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   module OmahaGroupsHelper
     def omaha_version_breakdown_bar(omaha_group)

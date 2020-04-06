@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OmahaReportsHelper
   def iconclass_for_omaha_status(status)
     case status.to_sym

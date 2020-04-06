@@ -1,9 +1,14 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-minitest
+
 # TODO: remove this file by either moving cops here or fixing code
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.2
-  TargetRailsVersion: 5.1
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.2
   Exclude:
     - '*.spec'
     - 'Rakefile'
@@ -18,29 +23,21 @@ Style/Documentation:
 Rails/ActionFilter:
   EnforcedStyle: action
 
-Metrics/MethodLength:
-  Max: 50
+Metrics:
+  Enabled: false
 
 Style/Next:
   Enabled: false
 
+Layout/LineLength:
+  Max: 180
+
 # Support both ruby19 and hash_rockets
 Style/HashSyntax:
-  Enabled: false
-
-Metrics/ClassLength:
-  Max: 150
-  Exclude:
-    - 'lib/foreman_omaha/engine.rb'
-    - 'test/**/*'
+  EnforcedStyle: no_mixed_keys
 
 Performance/FixedSize:
   Exclude:
-    - 'test/**/*'
-
-Metrics/BlockLength:
-  Exclude:
-    - 'lib/foreman_omaha/engine.rb'
     - 'test/**/*'
 
 Style/SymbolArray:
@@ -52,11 +49,17 @@ Lint/BooleanSymbol:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Metrics/LineLength:
-  Max: 180
-
 Style/FormatStringToken:
   Enabled: false
 
 Style/DoubleNegation:
   Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true

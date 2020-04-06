@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tasks
 namespace :foreman_omaha do
   namespace :example do

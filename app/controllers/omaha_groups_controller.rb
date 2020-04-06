@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OmahaGroupsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
 

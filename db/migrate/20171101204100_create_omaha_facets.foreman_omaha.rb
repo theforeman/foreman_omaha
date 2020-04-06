@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOmahaFacets < ActiveRecord::Migration[4.2]
   def change
     create_table :omaha_groups do |t|
