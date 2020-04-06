@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   module ApplicationHelper
     def facets_count(association, resource_name = controller.resource_name)

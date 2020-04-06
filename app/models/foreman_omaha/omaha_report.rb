@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   class OmahaReport < ::Report
     enum :status => OmahaFacet::VALID_OMAHA_STATUSES

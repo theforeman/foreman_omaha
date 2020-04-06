@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   class GroupVersionBreakdown
     attr_accessor :omaha_group

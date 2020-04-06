@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_plugin_helper'
 
 class Api::V2::OmahaGroupsControllerTest < ActionController::TestCase

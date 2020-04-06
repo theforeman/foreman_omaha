@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OmahaHostsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include ScopesPerAction

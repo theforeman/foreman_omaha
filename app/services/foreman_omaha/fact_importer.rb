@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   class FactImporter < ::FactImporter
     def self.authorized_smart_proxy_features

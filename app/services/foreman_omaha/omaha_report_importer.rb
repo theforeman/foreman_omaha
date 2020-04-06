@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   class OmahaReportImporter < ::ReportImporter
     def report_name_class

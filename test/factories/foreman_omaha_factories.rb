@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :omaha_report, :class => 'ForemanOmaha::OmahaReport' do
     host

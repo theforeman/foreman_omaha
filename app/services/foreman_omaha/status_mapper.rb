@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanOmaha
   class StatusMapper
     attr_accessor :status
@@ -25,7 +27,6 @@ module ForemanOmaha
       end
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
     def to_description(version = nil)
       case status.to_sym
       when :complete
@@ -48,6 +49,5 @@ module ForemanOmaha
         _('The status of this host is unknown.')
       end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 default_groups = %w[Alpha Beta Stable]
 
 default_groups.each do |group|

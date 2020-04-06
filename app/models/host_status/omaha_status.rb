@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HostStatus
   class OmahaStatus < HostStatus::Status
     def self.status_name

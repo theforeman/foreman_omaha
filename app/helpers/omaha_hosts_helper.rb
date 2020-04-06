@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OmahaHostsHelper
   def last_omaha_report_column(record)
     time = record.omaha_facet.last_report? ? _('%s ago') % time_ago_in_words(record.omaha_facet.last_report) : ''
