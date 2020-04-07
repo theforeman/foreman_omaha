@@ -21,7 +21,7 @@ module ForemanOmaha
 
     initializer 'foreman_omaha.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_omaha do
-        requires_foreman '>= 1.24'
+        requires_foreman '>= 1.21'
 
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
@@ -107,7 +107,7 @@ module ForemanOmaha
     # Include concerns in this config.to_prepare block
     config.to_prepare do
       begin
-        ::Foreman::Plugin.fact_importer_registry.register(:foreman_omaha, ForemanOmaha::FactImporter)
+        ::FactImporter.register_fact_importer(:foreman_omaha, ForemanOmaha::FactImporter)
         ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
 
         ::Host::Managed.include(ForemanOmaha::HostExtensions)
