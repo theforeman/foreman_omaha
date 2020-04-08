@@ -97,16 +97,18 @@ module ForemanOmaha
         # add renderer extensions
         allowed_template_helpers :transpile_container_linux_config
 
-        # graphql extensions
-        extend_graphql_type type: Types::Host do
-          has_many :omaha_reports, Types::OmahaReport
+        if ForemanOmaha::Engine.database_exists?
+          # graphql extensions
+          extend_graphql_type type: Types::Host do
+            has_many :omaha_reports, Types::OmahaReport
+          end
+
+          register_graphql_query_field :omaha_group, '::Types::OmahaGroup', :record_field
+          register_graphql_query_field :omaha_groups, '::Types::OmahaGroup', :collection_field
+
+          register_graphql_query_field :omaha_report, '::Types::OmahaReport', :record_field
+          register_graphql_query_field :omaha_reports, '::Types::OmahaReport', :collection_field
         end
-
-        register_graphql_query_field :omaha_group, '::Types::OmahaGroup', :record_field
-        register_graphql_query_field :omaha_groups, '::Types::OmahaGroup', :collection_field
-
-        register_graphql_query_field :omaha_report, '::Types::OmahaReport', :record_field
-        register_graphql_query_field :omaha_reports, '::Types::OmahaReport', :collection_field
       end
 
       # Extend built in permissions
@@ -141,6 +143,14 @@ module ForemanOmaha
       locale_dir = File.join(File.expand_path('../..', __dir__), 'locale')
       locale_domain = 'foreman_omaha'
       Foreman::Gettext::Support.add_text_domain locale_domain, locale_dir
+    end
+
+    def self.database_exists?
+      ActiveRecord::Base.connection
+    rescue ActiveRecord::NoDatabaseError
+      false
+    else
+      true
     end
   end
 end
