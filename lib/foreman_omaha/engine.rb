@@ -98,8 +98,12 @@ module ForemanOmaha
         allowed_template_helpers :transpile_container_linux_config
 
         # graphql extensions
-        extend_graphql_type type: Types::Host do
-          has_many :omaha_reports, Types::OmahaReport
+        begin
+          extend_graphql_type type: Types::Host do
+            has_many :omaha_reports, Types::OmahaReport
+          end
+        rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid => e
+          Rails.logger.warn "ForemanOmaha: failed to extend graphql type (#{e})"
         end
 
         register_graphql_query_field :omaha_group, '::Types::OmahaGroup', :record_field
