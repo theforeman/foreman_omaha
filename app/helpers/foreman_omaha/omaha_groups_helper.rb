@@ -13,13 +13,13 @@ module ForemanOmaha
       version_list = omaha_group.operatingsystems.pluck(:major, :minor).map { |v| Gem::Version.new(v.join('.')) }.sort.reverse
       current = version_list.max
       content_tag :div, :class => 'progress version-breakdown' do
-        safe_join(versions.map do |version|
+        safe_join(versions.compact.map do |version|
           semver = Gem::Version.new(version[:version])
           position = version_list.index(semver)
           css = {
             :width => "#{version[:percentage]}%"
           }
-          label = if semver > current
+          label = if !current || semver > current
                     :info
                   elsif semver == current
                     :success

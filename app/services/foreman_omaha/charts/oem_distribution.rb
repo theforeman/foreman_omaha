@@ -15,10 +15,7 @@ module ForemanOmaha
 
       def to_chart_data
         query.map do |oem, count|
-          {
-            :label => oem,
-            :data => count
-          }
+          [oem, count]
         end
       end
     end
