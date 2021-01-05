@@ -71,37 +71,37 @@
         <div class="card-pf-body">
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-md-4">
-              <h3 class="card-pf-subtitle"><%= _('Version Distribution') %></h3>
               <%=
-                flot_pie_chart(
-                  'omaha_status_distribution_chart',
-                  _('Version Distribution'),
-                  @version_distribution.to_chart_data,
-                  :class => 'statistics-pie small',
-                  :search => "omaha_group = #{@omaha_group} and omaha_version = ~VAL~"
+                react_component('ChartBox', type: 'donut',
+                  status: 'RESOLVED',
+                  title: _('Version Distribution'),
+                  chart: {
+                    data: @version_distribution.to_chart_data,
+                    search: hosts_path(search: "omaha_group = #{@omaha_group} and omaha_version = ~VAL~")
+                  }
                 )
               %>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
-              <h3 class="card-pf-subtitle"><%= _('Host Upgrade Progress') %></h3>
               <%=
-                flot_pie_chart(
-                  'omaha_status_distribution_chart',
-                  _('Version Distribution'),
-                  @status_distribution.to_chart_data,
-                  :class => 'statistics-pie small'
+                react_component('ChartBox', type: 'donut',
+                  status: 'RESOLVED',
+                  title: _('Host Upgrade Progress'),
+                  chart: {
+                    data: @status_distribution.to_chart_data
+                  }
                 )
               %>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
-               <h3 class="card-pf-subtitle"><%= _('OEM Distribution') %></h3>
                <%=
-                 flot_pie_chart(
-                   'omaha_oem_distribution_chart',
-                   _('OEM Distribution'),
-                   @oem_distribution.to_chart_data,
-                   :class => 'statistics-pie small',
-                   :search => "omaha_group = #{@omaha_group} and omaha_oem = ~VAL~"
+                 react_component('ChartBox', type: 'donut',
+                   status: 'RESOLVED',
+                   title: _('OEM Distribution'),
+                   chart: {
+                     data: @oem_distribution.to_chart_data,
+                     search: hosts_path(search: "omaha_group = #{@omaha_group} and omaha_oem = ~VAL~")
+                   }
                  )
                %>
             </div>

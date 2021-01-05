@@ -12,7 +12,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.4
+          ruby-version: 2.5
       - name: Setup
         run: |
           gem install bundler
@@ -30,14 +30,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        foreman-core-branch: [1.24-stable, 2.0-stable, develop]
-        ruby-version: [2.4, 2.5, 2.6]
+        foreman-core-branch: [2.0-stable, 2.1-stable, 2.2-stable, 2.3-stable, develop]
+        ruby-version: [2.5, 2.6]
         node-version: [10]
-        exclude:
-          - foreman-core-branch: 2.0-stable
-            ruby-version: 2.4
-          - foreman-core-branch: develop
-            ruby-version: 2.4
     steps:
       - run: sudo apt-get install build-essential libcurl4-openssl-dev libvirt-dev ruby-libvirt zlib1g-dev libpq-dev
       - uses: actions/checkout@v2

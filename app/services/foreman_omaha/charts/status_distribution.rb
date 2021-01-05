@@ -15,11 +15,7 @@ module ForemanOmaha
 
       def to_chart_data
         query.map do |status, count|
-          {
-            :label => status_label(status),
-            :data => count,
-            :color => status_color(status)
-          }
+          [status_label(status), count]
         end
       end
 

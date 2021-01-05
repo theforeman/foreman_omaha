@@ -18,11 +18,8 @@ module ForemanOmaha
         end
 
         test 'calculates the status distribution' do
-          expected = [
-            { :label => 'Complete', :data => 5, :color => '#89A54E' },
-            { :label => 'Downloading', :data => 3, :color => '#3D96AE' }
-          ]
-          assert_equal(expected, status_distribition_chart.to_chart_data.sort_by { |e| e[:label] })
+          expected = [['Complete', 5], ['Downloading', 3]]
+          assert_same_elements expected, status_distribition_chart.to_chart_data
         end
       end
     end

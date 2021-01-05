@@ -18,11 +18,8 @@ module ForemanOmaha
         end
 
         test 'calculates the version distribution' do
-          expected = [
-            { :label => '1068.9.0', :data => 5 },
-            { :label => '1465.7.0', :data => 7 }
-          ]
-          assert_equal(expected, version_distribition_chart.to_chart_data.sort_by { |e| e[:label] })
+          expected = [['1068.9.0', 5], ['1465.7.0', 7]]
+          assert_same_elements expected, version_distribition_chart.to_chart_data
         end
       end
     end

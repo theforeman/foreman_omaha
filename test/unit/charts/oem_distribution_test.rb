@@ -17,10 +17,8 @@ module ForemanOmaha
         end
 
         test 'calculates the oem distribution' do
-          expected = [
-            { :label => 'rackspace', :data => 5 }
-          ]
-          assert_equal(expected, oem_distribition_chart.to_chart_data.sort_by { |e| e[:label] })
+          expected = [['rackspace', 5]]
+          assert_same_elements expected, oem_distribition_chart.to_chart_data
         end
       end
     end
