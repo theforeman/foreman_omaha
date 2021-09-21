@@ -94,6 +94,7 @@ module ForemanOmaha
         add_controller_action_scope('HostsController', :index) { |base_scope| base_scope.includes(:omaha_facet) }
 
         # add renderer extensions
+        extend_template_helpers ForemanOmaha::TemplateRendererHelper
         allowed_template_helpers :transpile_container_linux_config
 
         register_graphql_query_field :omaha_group, 'ForemanOmaha::Types::OmahaGroup', :record_field
@@ -123,7 +124,6 @@ module ForemanOmaha
       ::Host::Managed.include(ForemanOmaha::HostExtensions)
       ::Host::Managed.include(ForemanOmaha::OmahaFacetHostExtensions)
       ::HostsHelper.include(ForemanOmaha::HostsHelperExtensions)
-      ::Foreman::Renderer::Scope::Base.include(ForemanOmaha::Renderer::Scope::Macros::Omaha)
       ::Types::Host.include(ForemanOmaha::Types::HostExtensions)
     rescue StandardError => e
       Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
