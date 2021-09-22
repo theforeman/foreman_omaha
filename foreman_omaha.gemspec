@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-matchheight-rails'
 
   s.add_development_dependency 'rdoc'
-  s.add_development_dependency 'rubocop', '~> 0.80.0'
+  s.add_development_dependency 'rubocop', '>= 0.80.0'
   s.add_development_dependency 'rubocop-minitest', '~> 0.7.0'
   s.add_development_dependency 'rubocop-performance', '~> 1.5.2'
   s.add_development_dependency 'rubocop-rails', '~> 2.4.2'

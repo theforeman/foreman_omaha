@@ -107,19 +107,17 @@ module ForemanOmaha
 
     # Include concerns in this config.to_prepare block
     config.to_prepare do
-      begin
-        ::FactImporter.register_fact_importer(:foreman_omaha, ForemanOmaha::FactImporter)
-        ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
+      ::FactImporter.register_fact_importer(:foreman_omaha, ForemanOmaha::FactImporter)
+      ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
 
-        ::Host::Managed.include(ForemanOmaha::HostExtensions)
-        ::Host::Managed.include(ForemanOmaha::OmahaFacetHostExtensions)
-        ::HostsHelper.include(ForemanOmaha::HostsHelperExtensions)
-        ::Foreman::Renderer::Scope::Base.include(ForemanOmaha::Renderer::Scope::Macros::Omaha)
-        ::Types::Query.include(Types::Extensions::ForemanOmaha::QueryExtensions)
-        ::Types::Host.include(Types::Extensions::ForemanOmaha::HostExtensions)
-      rescue StandardError => e
-        Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
-      end
+      ::Host::Managed.include(ForemanOmaha::HostExtensions)
+      ::Host::Managed.include(ForemanOmaha::OmahaFacetHostExtensions)
+      ::HostsHelper.include(ForemanOmaha::HostsHelperExtensions)
+      ::Foreman::Renderer::Scope::Base.include(ForemanOmaha::Renderer::Scope::Macros::Omaha)
+      ::Types::Query.include(Types::Extensions::ForemanOmaha::QueryExtensions)
+      ::Types::Host.include(Types::Extensions::ForemanOmaha::HostExtensions)
+    rescue StandardError => e
+      Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
     end
 
     rake_tasks do

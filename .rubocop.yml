@@ -7,11 +7,13 @@ require:
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
   TargetRailsVersion: 5.2
   Exclude:
-    - '*.spec'
-    - 'Rakefile'
+    - 'extras/**/*'
+    - 'locale/**/*'
+    - 'node_modules/**/*'
+    - 'vendor/bundle/**/*'
 
 Rails:
   Enabled: true

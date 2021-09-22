@@ -12,11 +12,21 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.4
-      - name: Setup
+          ruby-version: 2.5
+      - name: Setup Bundler
         run: |
           gem install bundler
-          bundle install --jobs=3 --retry=3
+          bundle config path vendor/bundle
+          bundle lock --update
+      - name: Cache gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Setup
+        run: bundle install --jobs=3 --retry=3
       - name: Run rubocop
         run: bundle exec rubocop
   test:
@@ -25,21 +35,28 @@ jobs:
     services:
       postgres:
         image: postgres:12.1
-        ports: ['5432:5432']
+        ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       fail-fast: false
       matrix:
-        foreman-core-branch: [1.24-stable, 2.0-stable, develop]
-        ruby-version: [2.4, 2.5, 2.6]
+        foreman-core-branch:
+          - 1.24-stable
+          - 2.0-stable
+          - 2.1-stable
+          - 2.2-stable
+          - 2.3-stable
+          - 2.4-stable
+          - 2.5-stable
+          - 3.0-stable
+          - develop
+        ruby-version: [2.5, 2.6]
         node-version: [10]
-        exclude:
-          - foreman-core-branch: 2.0-stable
-            ruby-version: 2.4
-          - foreman-core-branch: develop
-            ruby-version: 2.4
     steps:
-      - run: sudo apt-get install build-essential libcurl4-openssl-dev libvirt-dev ruby-libvirt zlib1g-dev libpq-dev
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install build-essential libcurl4-openssl-dev libvirt-dev ruby-libvirt zlib1g-dev libpq-dev
       - uses: actions/checkout@v2
         with:
           repository: theforeman/foreman
@@ -55,11 +72,22 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version:  ${{ matrix.node-version }}
+      - name: Setup Bundler
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle config set without journald development console mysql2 sqlite
+          echo "gem 'foreman_omaha', path: './foreman_omaha'" > bundler.d/foreman_omaha.local.rb
+          bundle lock --update
+      - name: Cache gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Setup Plugin
         run: |
-          echo "gem 'foreman_omaha', path: './foreman_omaha'" > bundler.d/foreman_omaha.local.rb
-          gem install bundler
-          bundle config set without journald development console mysql2 sqlite
           bundle install --jobs=3 --retry=3
           bundle exec rake db:create
           bundle exec rake db:migrate

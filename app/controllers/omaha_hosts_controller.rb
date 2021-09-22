@@ -17,10 +17,10 @@ class OmahaHostsController < ApplicationController
 
   def welcome
     has_entries = begin
-                    resource_base.first.nil?
-                  rescue StandardError
-                    false
-                  end
+      resource_base.first.nil?
+    rescue StandardError
+      false
+    end
     if has_entries
       @welcome = true
       render :welcome
