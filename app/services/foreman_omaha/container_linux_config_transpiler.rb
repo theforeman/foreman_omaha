@@ -5,6 +5,7 @@ require 'open3'
 module ForemanOmaha
   class ContainerLinuxConfigTranspiler
     class TranspilerNotFound < StandardError; end
+
     class TranspileError < StandardError; end
 
     attr_accessor :input, :output, :errors, :status
