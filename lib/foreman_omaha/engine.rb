@@ -107,8 +107,13 @@ module ForemanOmaha
 
     # Include concerns in this config.to_prepare block
     config.to_prepare do
-      ::FactImporter.register_fact_importer(:foreman_omaha, ForemanOmaha::FactImporter)
-      ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
+      if Gem::Version.new(SETTINGS[:version].notag) < Gem::Version.new('2.4')
+        ::FactImporter.register_fact_importer(:foreman_omaha, ForemanOmaha::FactImporter)
+        ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
+      else
+        Foreman::Plugin.fact_importer_registry.register(:foreman_omaha, ForemanOmaha::FactImporter, true)
+        Foreman::Plugin.fact_importer_registry.register(:foreman_omaha, ForemanOmaha::FactParser, true)
+      end
 
       ::Host::Managed.include(ForemanOmaha::HostExtensions)
       ::Host::Managed.include(ForemanOmaha::OmahaFacetHostExtensions)
