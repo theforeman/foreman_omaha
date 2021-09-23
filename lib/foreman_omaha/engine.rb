@@ -11,7 +11,6 @@ module ForemanOmaha
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/services"]
     config.autoload_paths += Dir["#{config.root}/app/lib"]
-    config.autoload_paths += Dir["#{config.root}/app/graphql"]
 
     # Add any db migrations
     initializer 'foreman_omaha.load_app_instance_data' do |app|
@@ -96,6 +95,12 @@ module ForemanOmaha
 
         # add renderer extensions
         allowed_template_helpers :transpile_container_linux_config
+
+        register_graphql_query_field :omaha_group, 'ForemanOmaha::Types::OmahaGroup', :record_field
+        register_graphql_query_field :omaha_groups, 'ForemanOmaha::Types::OmahaGroup', :collection_field
+
+        register_graphql_query_field :omaha_report, 'ForemanOmaha::Types::OmahaReport', :record_field
+        register_graphql_query_field :omaha_reports, 'ForemanOmaha::Types::OmahaReport', :collection_field
       end
 
       # Extend built in permissions
@@ -119,8 +124,7 @@ module ForemanOmaha
       ::Host::Managed.include(ForemanOmaha::OmahaFacetHostExtensions)
       ::HostsHelper.include(ForemanOmaha::HostsHelperExtensions)
       ::Foreman::Renderer::Scope::Base.include(ForemanOmaha::Renderer::Scope::Macros::Omaha)
-      ::Types::Query.include(Types::Extensions::ForemanOmaha::QueryExtensions)
-      ::Types::Host.include(Types::Extensions::ForemanOmaha::HostExtensions)
+      ::Types::Host.include(ForemanOmaha::Types::HostExtensions)
     rescue StandardError => e
       Rails.logger.warn "ForemanOmaha: skipping engine hook (#{e})"
     end
