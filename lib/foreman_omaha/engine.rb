@@ -21,7 +21,7 @@ module ForemanOmaha
 
     initializer 'foreman_omaha.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_omaha do
-        requires_foreman '>= 1.24'
+        requires_foreman '>= 3.0'
 
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
@@ -113,11 +113,11 @@ module ForemanOmaha
 
     # Include concerns in this config.to_prepare block
     config.to_prepare do
-      if Gem::Version.new(SETTINGS[:version].notag) < Gem::Version.new('2.4')
-        ::FactImporter.register_fact_importer(:foreman_omaha, ForemanOmaha::FactImporter)
-        ::FactParser.register_fact_parser(:foreman_omaha, ForemanOmaha::FactParser)
+      Foreman::Plugin.fact_importer_registry.register(:foreman_omaha, ForemanOmaha::FactImporter, true)
+
+      if Foreman::Plugin.respond_to?(:fact_parser_registry)
+        Foreman::Plugin.fact_parser_registry.register(:foreman_omaha, ForemanOmaha::FactParser, true)
       else
-        Foreman::Plugin.fact_importer_registry.register(:foreman_omaha, ForemanOmaha::FactImporter, true)
         Foreman::Plugin.fact_importer_registry.register(:foreman_omaha, ForemanOmaha::FactParser, true)
       end
 
