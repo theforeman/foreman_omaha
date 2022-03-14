@@ -100,7 +100,7 @@ class Api::V2::OmahaReportsControllerTest < ActionController::TestCase
 
     test 'hosts with a registered smart proxy on should create a report successfully' do
       Setting[:restrict_registered_smart_proxies] = true
-      Setting[:require_ssl_smart_proxies] = false
+      Setting[:require_ssl_smart_proxies] = false if Gem::Version.new(SETTINGS[:version].notag) < Gem::Version.new('3.1')
 
       proxy = FactoryBot.create(:smart_proxy, :omaha)
       host = URI.parse(proxy.url).host
