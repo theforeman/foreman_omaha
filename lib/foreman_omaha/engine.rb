@@ -23,6 +23,9 @@ module ForemanOmaha
       Foreman::Plugin.register :foreman_omaha do
         requires_foreman '>= 3.0'
 
+        automatic_assets(false)
+        precompile_assets(['foreman_omaha/version_breakdown.css', 'foreman_omaha/application.js'])
+
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
         register_custom_status HostStatus::OmahaStatus
