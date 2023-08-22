@@ -12,7 +12,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.5
+          ruby-version: 2.7
       - name: Setup Bundler
         run: |
           gem install bundler
@@ -45,8 +45,8 @@ jobs:
           - 3.1-stable
           - 3.2-stable
           - develop
-        ruby-version: [2.6, 2.7]
         node-version: [12]
+        ruby-version: [2.7]
     steps:
       - name: Install dependencies
         run: |
