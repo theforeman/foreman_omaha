@@ -3,6 +3,7 @@
 module ForemanOmaha
   module Types
     class OmahaGroup < ::Types::BaseObject
+      graphql_name 'ForemanOmaha_OmahaGroup'
       model_class ForemanOmaha::OmahaGroup
       description 'An Omaha Group'
 
@@ -12,10 +13,6 @@ module ForemanOmaha
       field :uuid, String
 
       has_many :hosts, ::Types::Host
-
-      def self.graphql_definition
-        super.tap { |type| type.instance_variable_set(:@name, 'ForemanOmaha::OmahaGroup') }
-      end
     end
   end
 end
