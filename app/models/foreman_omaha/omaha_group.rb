@@ -26,22 +26,13 @@ module ForemanOmaha
     end
 
     def latest_operatingsystem
-      case database_adapter_type
-      when :postgresql
-        operatingsystems.reorder('').order('major::text::integer DESC').order('minor::text::float DESC').limit(1).last
-      else
-        operatingsystems.reorder('').order(:major, :minor).last
-      end
+      operatingsystems.reorder('').order(:major, :minor).last
     end
 
     private
 
     def ensure_uuid
       self.uuid ||= SecureRandom.uuid
-    end
-
-    def database_adapter_type
-      ActiveRecord::Base.connection.adapter_name.downcase.to_sym
     end
   end
 end
