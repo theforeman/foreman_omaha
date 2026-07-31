@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module HostStatus
-  class OmahaStatus < HostStatus::Status
+module ForemanOmaha
+  class OmahaStatus < ::HostStatus::Status
     def self.status_name
       N_('Omaha Status')
     end
@@ -17,13 +17,13 @@ module HostStatus
 
       case host.omaha_facet.status.to_sym
       when :complete, :downloaded, :downloading, :installed
-        HostStatus::Global::OK
+        ::HostStatus::Global::OK
       when :instance_hold
-        HostStatus::Global::WARN
+        ::HostStatus::Global::WARN
       when :error
-        HostStatus::Global::ERROR
+        ::HostStatus::Global::ERROR
       else
-        HostStatus::Global::OK
+        ::HostStatus::Global::OK
       end
     end
 

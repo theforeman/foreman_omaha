@@ -28,7 +28,7 @@ module ForemanOmaha
 
         apipie_documented_controllers ["#{ForemanOmaha::Engine.root}/app/controllers/api/v2/*.rb"]
 
-        register_custom_status HostStatus::OmahaStatus
+        register_custom_status ForemanOmaha::OmahaStatus
 
         # Add permissions
         security_block :foreman_omaha do
