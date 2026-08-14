@@ -91,7 +91,7 @@ module ForemanOmaha
           context.add_pagelet :main_tabs,
                               :name => N_('Omaha'),
                               :partial => 'hosts/omaha_tab',
-                              :onlyif => proc { |host| host.omaha_facet }
+                              :onlyif => proc(&:omaha_facet)
         end
 
         add_controller_action_scope('HostsController', :index) { |base_scope| base_scope.includes(:omaha_facet) }
