@@ -29,14 +29,6 @@ Rails/HelperInstanceVariable:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: **/Rakefile, **/*.rake
-Rails/RakeEnvironment:
-  Exclude:
-    - 'lib/tasks/foreman_omaha_tasks.rake'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Rails/RedundantForeignKey:
   Exclude:
     - 'app/models/foreman_omaha/omaha_group.rb'
