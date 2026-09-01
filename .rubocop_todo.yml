@@ -8,13 +8,6 @@
 
 # Offense count: 1
 # Configuration parameters: Include.
-# Include: **/*.gemspec
-Gemspec/RequiredRubyVersion:
-  Exclude:
-    - 'foreman_omaha.gemspec'
-
-# Offense count: 1
-# Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
   Exclude:
@@ -29,22 +22,6 @@ Rails/HelperInstanceVariable:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: **/Rakefile, **/*.rake
-Rails/RakeEnvironment:
-  Exclude:
-    - 'lib/tasks/foreman_omaha_tasks.rake'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Rails/RedundantForeignKey:
   Exclude:
     - 'app/models/foreman_omaha/omaha_group.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'config/routes.rb'

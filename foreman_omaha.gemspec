@@ -16,6 +16,8 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib,locale}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
 
+  s.required_ruby_version = '>= 3.0'
+
   s.add_dependency 'jquery-matchheight-rails'
 
   s.add_development_dependency 'rdoc'

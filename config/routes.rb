@@ -6,7 +6,7 @@ Rails.application.routes.draw do
                      :defaults => { :apiv => 'v2' },
                      :apiv => /v1|v2/,
                      :constraints => ApiConstraints.new(:version => 2, :default => true) do
-      constraints(:id => /[^\/]+/) do
+      constraints(:id => %r{[^/]+}) do
         resources :omaha_reports, :only => [:index, :show, :destroy] do
           get :last, :on => :collection
         end
@@ -34,9 +34,9 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints(:id => /[^\/]+/) do
+  constraints(:id => %r{[^/]+}) do
     resources :hosts do
-      constraints(:host_id => /[^\/]+/) do
+      constraints(:host_id => %r{[^/]+}) do
         resources :omaha_reports, :only => [:index, :show]
       end
     end
