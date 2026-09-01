@@ -8,13 +8,6 @@
 
 # Offense count: 1
 # Configuration parameters: Include.
-# Include: **/*.gemspec
-Gemspec/RequiredRubyVersion:
-  Exclude:
-    - 'foreman_omaha.gemspec'
-
-# Offense count: 1
-# Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
   Exclude:
