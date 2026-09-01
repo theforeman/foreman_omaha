@@ -29,11 +29,11 @@ class OmahaHostsController < ApplicationController
     not_found
   end
 
-  protected
-
   def model_of_controller
     ::Host::Managed
   end
+
+  protected
 
   def resource_base
     super.joins(:omaha_facet)

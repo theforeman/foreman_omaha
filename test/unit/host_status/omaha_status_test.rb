@@ -4,7 +4,7 @@ require 'test_plugin_helper'
 
 class OmahaStatusTest < ActiveSupport::TestCase
   let(:host) { FactoryBot.build_stubbed(:host, :with_omaha_facet) }
-  let(:status) { HostStatus::OmahaStatus.new }
+  let(:status) { ForemanOmaha::OmahaStatus.new }
 
   setup do
     User.current = FactoryBot.create(:user, :admin)

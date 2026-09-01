@@ -72,8 +72,9 @@ module Api
         ::ForemanOmaha::OmahaReport
       end
 
-      def resource_scope(options = {})
-        super(options.merge(:permission => :view_omaha_reports)).my_reports
+      def resource_scope(*args, **options)
+        options[:permission] = :view_omaha_reports
+        super(*args, **options).my_reports
       end
 
       def action_permission
