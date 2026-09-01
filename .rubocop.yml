@@ -8,7 +8,7 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 3.0
-  TargetRailsVersion: 5.2
+  TargetRailsVersion: 7.0
   Exclude:
     - 'extras/**/*'
     - 'locale/**/*'
