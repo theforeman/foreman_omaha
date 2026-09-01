@@ -25,11 +25,3 @@ Rails/HelperInstanceVariable:
 Rails/RedundantForeignKey:
   Exclude:
     - 'app/models/foreman_omaha/omaha_group.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'config/routes.rb'
